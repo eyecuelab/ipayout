@@ -1,5 +1,27 @@
-require "eyecue_ipayout/version"
+require 'eyecue_ipayout/client'
+require 'eyecue_ipayout/config'
 
 module EyecueIpayout
-  # Your code goes here...
+  extend Config
+  class << self
+
+    puts "LOADED eyecue_ipayout"
+    # Alias for EyecueIpayout::Client.new
+    #
+    # @return [EyecueIpayout::Client]
+    def new(options={})
+      puts "CREATE NEW Client"
+      EyecueIpayout::Client.new(options)
+    end
+
+    # Delegate to EyecueIpayout::Client
+    def method_missing(method, *args, &block)
+      return super unless new.respond_to?(method)
+      new.send(method, *args, &block)
+    end
+
+    def respond_to?(method, include_private = false)
+      new.respond_to?(method, include_private) || super(method, include_private)
+    end
+  end
 end
