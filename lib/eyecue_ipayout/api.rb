@@ -8,15 +8,13 @@ module EyecueIpayout
     include Request
 
     attr_accessor *Config::VALID_OPTIONS_KEYS
-
     # Creates a new API
     def initialize(options={})
-      puts "INITIALIZE!!!"
       options = EyecueIpayout.options.merge(options)
       Config::VALID_OPTIONS_KEYS.each do |key|
         send("#{key}=", options[key])
       end
-      byebug
+      
     end
   end
 end

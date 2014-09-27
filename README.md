@@ -16,7 +16,18 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install eyecue_ipayout
+$ gem install eyecue_ipayout
+
+## Configuration
+
+There are a few important constants that you will need to set
+as environment variables.  When you do that, make sure you set
+them based on the Rails environment that is
+running (eg. production, development...)
+
+    ENV['IPAYOUT_API_ENDPOINT'] = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
+    ENV['IPAYOUT_MERCHANT_GUID'] = <YOUR MERCHANT GUID>
+    ENV['IPAYOUT_MERCHANT_PASSWORD'] = <YOUR MERCHANT PASSWORD>
 
 ## Developmet
 

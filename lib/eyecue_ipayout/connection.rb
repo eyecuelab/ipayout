@@ -1,7 +1,6 @@
 require 'faraday'
 require 'faraday_middleware'
 require 'eyecue_ipayout/core_ext/hash'
-require 'eyecue_ipayout/request/gateway'
 require 'eyecue_ipayout/response/raise_client_error'
 require 'eyecue_ipayout/response/raise_server_error'
 
@@ -13,7 +12,9 @@ module EyecueIpayout
     #
     # @param options [Hash] A hash of options
     # @return [Faraday::Connection]
-    def connection(options={})
+    def connection(options = {})
+      puts "GETTING CONNECTION........."
+      
       default_options = {
         :headers => {
           :accept => 'application/json',
@@ -21,20 +22,21 @@ module EyecueIpayout
         },
         :proxy => proxy,
         :ssl => {:verify => false},
-        :url => options.falseetch(:endpoint, api_endpoint)
+        :url => IPAYOUT_API_ENDPOINT
       }
-
-      @connection ||= Faraday.new(connection_options.deep_merge(default_options)) do |builder|
-        builder.use Faraday::Request::Multipart
-        builder.use Faraday::Request::UrlEncoded
-        builder.use EyecueIpayout::Request::Gateway, gateway if gateway
-        builder.use EyecueIpayout::Response::RaiseClientError
-        builder.use Faraday::Response::Mashify
-        builder.use Faraday::Response::ParseJson
-        builder.use EyecueIpayout::Response::RaiseServerError
-        builder.adapter(adapter)
+      puts "INSTANTIATE CONNECTION....."
+      faraday_options = connection_options.deep_merge(default_options)
+      
+      @connection = Faraday.new(faraday_options) do |faraday|
+        faraday.adapter Faraday.default_adapter
+        #faraday.response :json, :content_type => /\bjson$/
+        faraday.use EyecueIpayout::Response::RaiseClientError
+        faraday.use EyecueIpayout::Response::RaiseServerError
+        faraday.use Faraday::Response::Mashify
+        faraday.use Faraday::Response::ParseJson
+        faraday.request  :url_encoded
+        faraday.response :logger
       end
-
       @connection
     end
   end

@@ -5,12 +5,10 @@ module EyecueIpayout
   extend Config
   class << self
 
-    puts "LOADED eyecue_ipayout"
     # Alias for EyecueIpayout::Client.new
     #
     # @return [EyecueIpayout::Client]
     def new(options={})
-      puts "CREATE NEW Client"
       EyecueIpayout::Client.new(options)
     end
 

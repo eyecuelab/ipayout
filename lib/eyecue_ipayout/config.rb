@@ -4,16 +4,7 @@ module EyecueIpayout
   # Defines constants and methods related to configuration
   module Config
 
-    MERCHANT_NAME = "SunStand"
-    API_MERCHANT_ID = "a4739056-7db6-40f3-9618-f2bcccbf70cc"
-
-    PRODUCTION_BASE_URL = "https://sunstand.globalewallet.com"
-    PRODUCTION_WEBSERVICE_URL = "https://www.i-payout.net/eWalletWS/ws_Adapter.aspx"
-
-    SANDBOX_BASE_URL = "https://sunstand.testewallet.com/"
-    SANDBOX_WEBSERVICE_URL = "https://www.testewallet.com/eWalletWS/ws_Adapter.aspx"
-    
-      # The access token if none is set
+    # The access token if none is set
     DEFAULT_ACCESS_TOKEN = nil
 
     # The HTTP connection adapter that will be used to connect if none is set
@@ -29,25 +20,24 @@ module EyecueIpayout
     DEFAULT_GATEWAY = nil
 
     # The proxy server if none is set
-    DEFAULT_PROXY = nil
+    DEFAULT_PROXY = ''
 
     # The value sent in the 'User-Agent' header if none is set
     DEFAULT_USER_AGENT = "EyecueIpayout Ruby Gem #{EyecueIpayout::VERSION}"
 
+    IPAYOUT_API_ENDPOINT = ENV['IPAYOUT_API_ENDPOINT']
+    IPAYOUT_MERCHANT_GUID = ENV['IPAYOUT_MERCHANT_GUID']
+    IPAYOUT_MERCHANT_PASSWORD = ENV['IPAYOUT_MERCHANT_PASSWORD']
 
     # An array of valid keys in the options hash when configuring a {EyecueIpayout::API}
     VALID_OPTIONS_KEYS = [
-      :merchant_name,
-      :api_merchant_id,
-      :production_webservice_url,
-      :production_base_url,
-      :sandbox_webservice_url,
-      :sandbox_base_url,
-      :gateway,
-      :endpoint,
-      :user_agent,
       :adapter,
       :connection_options,
+      :endpoint,
+      :gateway,
+      :access_token,
+      :proxy,
+      :user_agent
     ]
 
     attr_accessor *VALID_OPTIONS_KEYS
@@ -71,16 +61,12 @@ module EyecueIpayout
 
     # Reset all configuration options to defaults
     def reset
-      self.merchant_name              = MERCHANT_NAME
-      self.api_merchant_id            = API_MERCHANT_ID
-      self.production_webservice_url  = PRODUCTION_WEBSERVICE_URL
-      self.production_base_url        = PRODUCTION_BASE_URL
-      self.sandbox_webservice_url     = SANDBOX_WEBSERVICE_URL
-      self.sandbox_base_url           = SANDBOX_BASE_URL
+      self.access_token       = DEFAULT_ACCESS_TOKEN
       self.adapter            = DEFAULT_ADAPTER
       self.connection_options = DEFAULT_CONNECTION_OPTIONS
       self.endpoint           = DEFAULT_ENDPOINT
       self.gateway            = DEFAULT_GATEWAY
+      self.proxy              = DEFAULT_PROXY
       self.user_agent         = DEFAULT_USER_AGENT
       self
     end
