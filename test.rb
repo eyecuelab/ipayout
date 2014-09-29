@@ -20,17 +20,6 @@ ENV['IPAYOUT_MERCHANT_PASSWORD'] = IPAYOUT_MERCHANT_PASSWORD
 # eWallet_RequestUserAutoLogin
 ###############################
 
-params_by_service = {}
-responses_by_service = {}
-base_service_responses = ["m_Code", "m_Text"]
-
-params_by_service["register_user"] = ["MerchantGUID","MerchantPassword","UserName","FirstName",
-  "LastName","CompanyName","Address1","Address2","City","State","ZipCode","Country2xFormat","PhoneNumber","CellPhoneNumber",
-  "EmailAddress","SSN","CompanyTaxID","GovernmentID","MilitaryID","PassportNumber","DriversLicense","DateOfBirth",
-  "WebsitePassword","DefaultCurrency","SkipAutoSVCOrder","PreferredLanguage","IsBusinessUser","BusinessUserName"]
-
-responses_by_service["register_user"] = ['TransactionRefID']
-
 ipayout_client_options = {:IPAYOUT_API_ENDPOINT => IPAYOUT_API_ENDPOINT, :IPAYOUT_MERCHANT_GUID => IPAYOUT_MERCHANT_GUID, :IPAYOUT_MERCHANT_PASSWORD=>IPAYOUT_MERCHANT_PASSWORD}
 client = EyecueIpayout.new()
 
