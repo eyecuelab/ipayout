@@ -1,6 +1,6 @@
 # EyecueIpayout
 
-TODO: Write a gem description
+This gem serves as a wrapper for the iPayout eWallet Web Service.
 
 ## Installation
 
@@ -64,3 +64,4 @@ TODO: Write usage instructions here
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
+
