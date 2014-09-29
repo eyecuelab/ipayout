@@ -25,39 +25,38 @@ client = EyecueIpayout.new()
 
 
 ################### eWallet_RegisterUser #######################################
-# options_hash = {}
-# options_hash[:fn] = 'eWallet_RegisterUser'
-# options_hash[:endpoint] = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
-# options_hash[:MerchantGUID] =IPAYOUT_MERCHANT_GUID
-# options_hash[:MerchantPassword] =IPAYOUT_MERCHANT_PASSWORD 
-# options_hash[:UserName] = 'dmcalerney'
-# options_hash[:FirstName] = 'Danny'
-# options_hash[:LastName] = 'McAlerney'
-# options_hash[:CompanyName] = 'EyeCue Lab'
-# options_hash[:Address1] = '2332 NE Jarrett St.'
-# options_hash[:Address2] = ''
-# options_hash[:City] = 'Portland'
-# options_hash[:State] = 'OR'
-# options_hash[:ZipCode] = '97211'
-# options_hash[:Country2xFormat] = 'US'
-# options_hash[:PhoneNumber] = '5039262516'
-# options_hash[:CellPhoneNumber] = '5039262516'
-# options_hash[:EmailAddress] = 'daniel.mcalerney@eyecuelab.com'
-# options_hash[:SSN] = ''
-# options_hash[:CompanyTaxID] = ''
-# options_hash[:GovernmentID] = ''
-# options_hash[:MilitaryID] = ''
-# options_hash[:PassportNumber] = ''
-# options_hash[:DriversLicense] = ''
-# options_hash[:DateOfBirth] = '10/17/1980'
-# options_hash[:WebsitePassword] = ''
-# options_hash[:DefaultCurrency] = 'USD'
-# options_hash[:SkipAutoSVCOrder] = ''
-# options_hash[:PreferredLanguage] = ''
-# options_hash[:IsBusinessUser] = ''
-# options_hash[:BusinessUserName] = ''
-
-#response = client.register_user(options_hash.to_json, {})
+options_hash = {}
+options_hash[:fn] = 'eWallet_RegisterUser'
+options_hash[:endpoint] = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
+options_hash[:MerchantGUID] =IPAYOUT_MERCHANT_GUID
+options_hash[:MerchantPassword] =IPAYOUT_MERCHANT_PASSWORD 
+options_hash[:UserName] = 'dmcalerney'
+options_hash[:FirstName] = 'Danny'
+options_hash[:LastName] = 'McAlerney'
+options_hash[:CompanyName] = 'EyeCue Lab'
+options_hash[:Address1] = '2332 NE Jarrett St.'
+options_hash[:Address2] = ''
+options_hash[:City] = 'Portland'
+options_hash[:State] = 'OR'
+options_hash[:ZipCode] = '97211'
+options_hash[:Country2xFormat] = 'US'
+options_hash[:PhoneNumber] = '5039262516'
+options_hash[:CellPhoneNumber] = '5039262516'
+options_hash[:EmailAddress] = 'daniel.mcalerney@eyecuelab.com'
+options_hash[:SSN] = ''
+options_hash[:CompanyTaxID] = ''
+options_hash[:GovernmentID] = ''
+options_hash[:MilitaryID] = ''
+options_hash[:PassportNumber] = ''
+options_hash[:DriversLicense] = ''
+options_hash[:DateOfBirth] = '10/17/1980'
+options_hash[:WebsitePassword] = ''
+options_hash[:DefaultCurrency] = 'USD'
+options_hash[:SkipAutoSVCOrder] = ''
+options_hash[:PreferredLanguage] = ''
+options_hash[:IsBusinessUser] = ''
+options_hash[:BusinessUserName] = ''
+response = client.register_user(options_hash.to_json, {})
 ################### eWallet_RegisterUser #######################################
 
 

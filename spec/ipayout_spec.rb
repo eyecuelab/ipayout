@@ -1,14 +1,6 @@
 require 'spec_helper'
 require 'byebug'
-# feature 'External request' do
-#   it 'queries FactoryGirl contributors on Github' do
-#     uri = URI('https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx')
-
-#     response = Net::HTTP.get(uri)
-
-#     expect(response).to be_an_instance_of(String)
-#   end
-# end
+require "securerandom"
 
 describe EyecueIpayout do
   subject { EyecueIpayout.new }
@@ -73,6 +65,59 @@ describe EyecueIpayout do
     response = @client.eWallet_request(options_hash, {})
     print response
     expect(response["m_Text"]).to eq("OK")
+    expect(response).to include("AccStatus")
   end
+
+  it "should fetch registered user's account details" do
+    options_hash = {}
+    options_hash[:fn] = 'eWallet_GetCustomerDetails'
+    options_hash[:endpoint] = IPAYOUT_API_ENDPOINT
+    options_hash[:MerchantGUID] = IPAYOUT_MERCHANT_GUID
+    options_hash[:MerchantPassword] = IPAYOUT_MERCHANT_PASSWORD
+    options_hash[:UserName] = 'eyecueTestUser'
+    response = @client.eWallet_request(options_hash, {})
+    print response
+    expect(response["m_Text"]).to eq("OK")
+    expect(response["UserName"]).to eq("eyecueTestUser")
+  end
+
+  it "should distribute funds to registered user's account" do
+    transaction_hex = SecureRandom.hex(16)
+    transaction_hex.insert(-27,"-")
+    transaction_hex.insert(-22,"-")
+    transaction_hex.insert(-17,"-")
+    transaction_hex.insert(-12,"-")
+
+    options_hash = {}
+    options_hash[:fn] = 'eWallet_Load',
+    options_hash[:MerchantGUID] =IPAYOUT_MERCHANT_GUID,
+    options_hash[:MerchantPassword] =IPAYOUT_MERCHANT_PASSWORD,
+    options_hash[:PartnerBatchID] = DateTime.now.to_s,
+    options_hash[:PoolID] = '',
+    options_hash[:arrAccounts] = [{:UserName => 'eyecueTestuser', :Amount => 1.00, :Comments => 'Test Test Test', :MerchantReferenceID => transaction_hex}],
+    options_hash[:AllowDuplicates] = true,
+    options_hash[:AutoLoad] = true,
+    options_hash[:CurrencyCode] = 'USD'
+    response = @client.eWallet_request(options_hash, {})
+    print response
+    expect(response["m_Text"]).to eq("OK")
+    expect(response).to include("TransactionRefID")
+  end
+
+  it "should fetch registered user's account balance" do
+    options_hash = {}
+    options_hash[:fn] = 'eWallet_GetCurrencyBalance'
+    options_hash[:endpoint] = IPAYOUT_API_ENDPOINT
+    options_hash[:MerchantGUID] =IPAYOUT_MERCHANT_GUID
+    options_hash[:MerchantPassword] =IPAYOUT_MERCHANT_PASSWORD
+    options_hash[:UserName] = 'eyecueTestUser'
+    options_hash[:CurrencyCode] = 'USD'
+    response = @client.eWallet_request(options_hash, {})
+    print response
+    expect(response["m_Text"]).to eq("OK")
+    expect(response).to include("CurrencyCode")
+  end
+
+
 
 end
