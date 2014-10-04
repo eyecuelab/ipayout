@@ -1,10 +1,11 @@
 require 'eyecue_ipayout/client'
 require 'eyecue_ipayout/config'
-
+require 'eyecue_ipayout/service'
+require 'eyecue_ipayout/service_param'
 module EyecueIpayout
   extend Config
   class << self
-
+    
     # Alias for EyecueIpayout::Client.new
     #
     # @return [EyecueIpayout::Client]
