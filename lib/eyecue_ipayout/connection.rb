@@ -22,12 +22,11 @@ module EyecueIpayout
         },
         #:proxy => proxy,
         :ssl => {:verify => false},
-        :url => ENV['IPAYOUT_API_ENDPOINT'],
-        :endpoint => ENV['IPAYOUT_API_ENDPOINT']
+        :url => ENV['EYECUEOUT_API_ENDPOINT'],
       }
-      byebug
+      #byebug
       faraday_options = connection_options.deep_merge(default_options)
-      puts "!!!!!!EyecueIpayout::Connection ->Connection...instantiate connection"
+      puts "!!!!!!EyecueIpayout::Connection->Connection...instantiate connection"
       @connection = Faraday.new(faraday_options) do |faraday|
         faraday.adapter Faraday.default_adapter
         #faraday.response :json, :content_type => /\bjson$/
