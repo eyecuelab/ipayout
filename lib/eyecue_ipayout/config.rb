@@ -14,7 +14,8 @@ module EyecueIpayout
     DEFAULT_CONNECTION_OPTIONS = {}
 
     # The endpoint that will be used to connect if none is set
-    DEFAULT_ENDPOINT = "http://localhost:3000/"
+    DEFAULT_ENDPOINT = ENV["IPAYOUT_API_ENDPOINT"]
+    DEFAULT_URL = ENV["IPAYOUT_API_ENDPOINT"]
 
     # The gateway server if none is set
     DEFAULT_GATEWAY = nil
@@ -38,7 +39,8 @@ module EyecueIpayout
       :access_token,
       :proxy,
       :user_agent,
-      :url
+      :url,
+      :endpoint
     ]
 
     attr_accessor *VALID_OPTIONS_KEYS
@@ -69,6 +71,8 @@ module EyecueIpayout
       self.gateway            = DEFAULT_GATEWAY
       self.proxy              = DEFAULT_PROXY
       self.user_agent         = DEFAULT_USER_AGENT
+      self.endpoint           = DEFAULT_ENDPOINT
+      self.url                = DEFAULT_URL
       self
     end
   end

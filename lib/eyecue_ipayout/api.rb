@@ -10,6 +10,7 @@ module EyecueIpayout
     attr_accessor *Config::VALID_OPTIONS_KEYS
     # Creates a new API
     def initialize(options = {})
+      puts "!!!!!!EyecueIpayout::API -> initialize"
       byebug
       options = EyecueIpayout.options.merge(options)
       @service_param_map = EyecueIpayout::ServiceParamMap.new

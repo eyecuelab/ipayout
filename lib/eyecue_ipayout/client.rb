@@ -12,6 +12,7 @@ module EyecueIpayout
     # For this API, we pass the function call along
     # with the rest of the parameters in the 'fn' param
     def eWallet_request(params = {}, options = {})
+      puts "!!!!!!EyecueIpayout::Client -> eWallet_Request"
       byebug
       response = connection.post do |req|
 
@@ -23,6 +24,7 @@ module EyecueIpayout
     end
 
     def get_service(service_name)
+      puts "!!!!!!EyecueIpayout::Client -> get_service" + service_name
       puts "eyecue_ipayout :: get_service(service_name):" + service_name
       service_param_map.get_service_by_name(service_name)
     end

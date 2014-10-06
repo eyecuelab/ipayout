@@ -14,7 +14,7 @@ module EyecueIpayout
     # @param options [Hash] A hash of options
     # @return [Faraday::Connection]
     def connection(options = {})
-
+      puts "!!!!!!EyecueIpayout::Connection ->Connection"
       default_options = {
         :headers => {
           :accept => 'application/json',
@@ -25,10 +25,9 @@ module EyecueIpayout
         :url => ENV['IPAYOUT_API_ENDPOINT'],
         :endpoint => ENV['IPAYOUT_API_ENDPOINT']
       }
-      puts "INSTANTIATE CONNECTION....."
       byebug
       faraday_options = connection_options.deep_merge(default_options)
-
+      puts "!!!!!!EyecueIpayout::Connection ->Connection...instantiate connection"
       @connection = Faraday.new(faraday_options) do |faraday|
         faraday.adapter Faraday.default_adapter
         #faraday.response :json, :content_type => /\bjson$/
