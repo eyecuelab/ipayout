@@ -3,6 +3,9 @@ require 'eyecue_ipayout/version'
 module EyecueIpayout
   # Defines constants and methods related to configuration
   module Config
+    IPAYOUT_API_ENDPOINT = ENV['IPAYOUT_API_ENDPOINT']
+    IPAYOUT_MERCHANT_GUID = ENV['IPAYOUT_MERCHANT_GUID']
+    IPAYOUT_MERCHANT_PASSWORD = ENV['IPAYOUT_MERCHANT_PASSWORD']
 
     # The access token if none is set
     DEFAULT_ACCESS_TOKEN = nil
@@ -26,9 +29,6 @@ module EyecueIpayout
     # The value sent in the 'User-Agent' header if none is set
     DEFAULT_USER_AGENT = "EyecueIpayout Ruby Gem #{EyecueIpayout::VERSION}"
 
-    IPAYOUT_API_ENDPOINT = ENV['IPAYOUT_API_ENDPOINT']
-    IPAYOUT_MERCHANT_GUID = ENV['IPAYOUT_MERCHANT_GUID']
-    IPAYOUT_MERCHANT_PASSWORD = ENV['IPAYOUT_MERCHANT_PASSWORD']
 
     # An array of valid keys in the options hash when configuring a {EyecueIpayout::API}
     VALID_OPTIONS_KEYS = [

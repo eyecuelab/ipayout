@@ -10,7 +10,14 @@ module EyecueIpayout
     #
     # @return [EyecueIpayout::Client]
     def new(options={})
-      EyecueIpayout::Client.new(options)
+
+    IPAYOUT_API_ENDPOINT = ENV['IPAYOUT_API_ENDPOINT']
+    IPAYOUT_MERCHANT_GUID = ENV['IPAYOUT_MERCHANT_GUID']
+    IPAYOUT_MERCHANT_PASSWORD = ENV['IPAYOUT_MERCHANT_PASSWORD']
+
+    options_hash = {:url => IPAYOUT_API_ENDPOINT}
+      EyecueIpayout::Client.new(options_hash)
+    }
     end
 
     # Delegate to EyecueIpayout::Client
