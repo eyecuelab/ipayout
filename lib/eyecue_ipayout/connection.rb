@@ -22,7 +22,7 @@ module EyecueIpayout
         },
         :proxy => proxy,
         :ssl => {:verify => false},
-        :url => options[:endpoint]
+        #:url => options[:endpoint]
       }
       puts "INSTANTIATE CONNECTION....."
       faraday_options = connection_options.deep_merge(default_options)
