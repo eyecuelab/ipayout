@@ -3,6 +3,7 @@ require 'faraday_middleware'
 require 'eyecue_ipayout/core_ext/hash'
 require 'eyecue_ipayout/response/raise_client_error'
 require 'eyecue_ipayout/response/raise_server_error'
+require 'eyecue_ipayout/config'
 
 module EyecueIpayout
   module Connection
