@@ -20,11 +20,12 @@ module EyecueIpayout
           :accept => 'application/json',
           :user_agent => user_agent
         },
-        :proxy => proxy,
+        #:proxy => proxy,
         :ssl => {:verify => false},
-        #:url => options[:endpoint]
+        :url => options[:endpoint]
       }
       puts "INSTANTIATE CONNECTION....."
+      byebug
       faraday_options = connection_options.deep_merge(default_options)
 
       @connection = Faraday.new(faraday_options) do |faraday|

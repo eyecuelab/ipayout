@@ -37,7 +37,8 @@ module EyecueIpayout
       :gateway,
       :access_token,
       :proxy,
-      :user_agent
+      :user_agent,
+      :url
     ]
 
     attr_accessor *VALID_OPTIONS_KEYS
