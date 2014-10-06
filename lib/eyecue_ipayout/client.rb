@@ -12,6 +12,7 @@ module EyecueIpayout
     # For this API, we pass the function call along
     # with the rest of the parameters in the 'fn' param
     def eWallet_request(params = {}, options = {})
+      byebug
       response = connection.post do |req|
 
         req.url = params['endpoint']

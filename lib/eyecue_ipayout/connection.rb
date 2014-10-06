@@ -22,7 +22,8 @@ module EyecueIpayout
         },
         #:proxy => proxy,
         :ssl => {:verify => false},
-        :url => options[:endpoint]
+        :url => ENV['IPAYOUT_API_ENDPOINT'],
+        :endpoint => ENV['IPAYOUT_API_ENDPOINT']
       }
       puts "INSTANTIATE CONNECTION....."
       byebug
