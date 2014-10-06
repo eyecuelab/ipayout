@@ -22,7 +22,7 @@ module EyecueIpayout
     end
 
     def get_service(service_name)
-      put "eyecue_ipayout :: get_service(service_name):" + service_name
+      puts "eyecue_ipayout :: get_service(service_name):" + service_name
       service_param_map.get_service_by_name(service_name)
     end
   end
