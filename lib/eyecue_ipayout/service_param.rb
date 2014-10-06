@@ -8,7 +8,8 @@ module EyecueIpayout
   # we'll only have to change the wrapper in one place
   # (during the instantiation of this object)
   class ServiceParam
-    
+
+    attr_accessor :value, :name
     # Initializes new ServiceParam object
     #
     # @param [String] name
@@ -19,6 +20,7 @@ module EyecueIpayout
 
     def initialize(name, expected_type="String", required=false)
       @name = name
+      @value = ""
       @expected_type = expected_type
       @required = required
     end
