@@ -19,11 +19,17 @@ ipayout_client_options = {:IPAYOUT_API_ENDPOINT => IPAYOUT_API_ENDPOINT,
 
 client = EyecueIpayout.new()
 
-service = client.get_service("eWallet_GetCustomerDetails")
+#service = client.get_service("eWallet_GetCustomerDetails")
 
+puts 'Call eWallet_GetCustomerDetails'
+service = client.get_service('get_customer_details')
+# request_params = service.request_param_list
+options_hash   = assign_param_values(params, service.parameters)
+# service_params = assign_param_values(params, service.parameters)
+# options_hash = reduce_to_param_hash(service_params)
+response = client.ewallet_request(options_hash, {})
 byebug
-
-
+response
 # service = EyecueIpayout::Service.new("eWallet_RegisterUser")
 # service.add_param('fn', 'String', true)
 # service.add_param('endpoint', 'String', true)
@@ -68,62 +74,60 @@ byebug
 ################################
 # eWallet_RegisterUser - OK
 # eWallet_GetCurrencyBalance - OK
-# eWallet_GetCustomerDetails - OK 
+# eWallet_GetCustomerDetails - OK
 # eWallet_Load - OK
 # eWallet_GetUserAccountStatus - OK
 # eWallet_RequestUserAutoLogin
 ###############################
 
 ################### eWallet_RegisterUser #######################################
-# options_hash = {}
-# options_hash[:fn] = 'eWallet_RegisterUser'
-# options_hash[:endpoint] = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
-# options_hash[:MerchantGUID] =IPAYOUT_MERCHANT_GUID
-# options_hash[:MerchantPassword] =IPAYOUT_MERCHANT_PASSWORD 
-# options_hash[:UserName] = 'dmcalerney'
-# options_hash[:FirstName] = 'Danny'
-# options_hash[:LastName] = 'McAlerney'
-# options_hash[:CompanyName] = 'EyeCue Lab'
-# options_hash[:Address1] = '2332 NE Jarrett St.'
-# options_hash[:Address2] = ''
-# options_hash[:City] = 'Portland'
-# options_hash[:State] = 'OR'
-# options_hash[:ZipCode] = '97211'
-# options_hash[:Country2xFormat] = 'US'
-# options_hash[:PhoneNumber] = '5039262516'
-# options_hash[:CellPhoneNumber] = '5039262516'
-# options_hash[:EmailAddress] = 'daniel.mcalerney@eyecuelab.com'
-# options_hash[:SSN] = ''
-# options_hash[:CompanyTaxID] = ''
-# options_hash[:GovernmentID] = ''
-# options_hash[:MilitaryID] = ''
-# options_hash[:PassportNumber] = ''
-# options_hash[:DriversLicense] = ''
-# options_hash[:DateOfBirth] = '10/17/1980'
-# options_hash[:WebsitePassword] = ''
-# options_hash[:DefaultCurrency] = 'USD'
-# options_hash[:SkipAutoSVCOrder] = ''
-# options_hash[:PreferredLanguage] = ''
-# options_hash[:IsBusinessUser] = ''
-# options_hash[:BusinessUserName] = ''
-# response = client.register_user(options_hash.to_json, {})
+# params_hash = {}
+# params_hash[:fn] = 'eWallet_RegisterUser'
+# params_hash[:endpoint] = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
+# params_hash[:MerchantGUID] =IPAYOUT_MERCHANT_GUID
+# params_hash[:MerchantPassword] =IPAYOUT_MERCHANT_PASSWORD
+# params_hash[:UserName] = 'dmcalerney'
+# params_hash[:FirstName] = 'Danny'
+# params_hash[:LastName] = 'McAlerney'
+# params_hash[:CompanyName] = 'EyeCue Lab'
+# params_hash[:Address1] = '2332 NE Jarrett St.'
+# params_hash[:Address2] = ''
+# params_hash[:City] = 'Portland'
+# params_hash[:State] = 'OR'
+# params_hash[:ZipCode] = '97211'
+# params_hash[:Country2xFormat] = 'US'
+# params_hash[:PhoneNumber] = '5039262516'
+# params_hash[:CellPhoneNumber] = '5039262516'
+# params_hash[:EmailAddress] = 'daniel.mcalerney@eyecuelab.com'
+# params_hash[:SSN] = ''
+# params_hash[:CompanyTaxID] = ''
+# params_hash[:GovernmentID] = ''
+# params_hash[:MilitaryID] = ''
+# params_hash[:PassportNumber] = ''
+# params_hash[:DriversLicense] = ''
+# params_hash[:DateOfBirth] = '10/17/1980'
+# params_hash[:WebsitePassword] = ''
+# params_hash[:DefaultCurrency] = 'USD'
+# params_hash[:SkipAutoSVCOrder] = ''
+# params_hash[:PreferredLanguage] = ''
+# params_hash[:IsBusinessUser] = ''
+# params_hash[:BusinessUserName] = ''
+# response = client.register_user(params_hash.to_json, {})
 ################### eWallet_RegisterUser #######################################
 
 
 ################### eWallet_GetCustomerDetails#######################################
-options_hash = {}
-options_hash[:fn] = 'eWallet_GetCustomerDetails'
-options_hash[:endpoint] = IPAYOUT_API_ENDPOINT
-options_hash[:MerchantGUID] = IPAYOUT_MERCHANT_GUID
-options_hash[:MerchantPassword] = IPAYOUT_MERCHANT_PASSWORD
-options_hash[:UserName] = 'dmcalerney'
-response = client.eWallet_request(options_hash, {})
+# params_hash = {}
+# params_hash[:fn] = 'eWallet_GetCustomerDetails'
+# params_hash[:endpoint] = IPAYOUT_API_ENDPOINT
+# params_hash[:MerchantGUID] = IPAYOUT_MERCHANT_GUID
+# params_hash[:MerchantPassword] = IPAYOUT_MERCHANT_PASSWORD
+# params_hash[:UserName] = 'dmcalerney'
+# response = client.ewallet_request(params_hash)
 
 # "{'fn':'eWallet_GetCustomerDetails','endpoint':'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx','MerchantGUID':'a4739056-7db6-40f3-9618-f2bcccbf70cc','MerchantPassword':'9xXLvA66hi','UserName':'dmcalerney'}"
 
 ################### eWallet_GetCustomerDetails#######################################
-
-
 
 ################### eWallet_Load #######################################
 #notes:
@@ -139,39 +143,39 @@ response = client.eWallet_request(options_hash, {})
 #  "CustomerFeeAmount"=>0.0,
 #  "CurrencyCode"=>nil}
 
-# options_hash = {}
-# options_hash[:fn] = 'eWallet_Load',
-# options_hash[:MerchantGUID] =IPAYOUT_MERCHANT_GUID,
-# options_hash[:MerchantPassword] =IPAYOUT_MERCHANT_PASSWORD,
-# options_hash[:PartnerBatchID] = DateTime.now.to_s,
-# options_hash[:PoolID] = '',
-# options_hash[:arrAccounts] = [{:UserName => 'dmcalerney', :Amount => 20.50, :Comments => 'Test Test Test', :MerchantReferenceID => 'a4739056-7db6-40f3-9618-f2bcccbf70cc'}],
-# options_hash[:AllowDuplicates] = true,
-# options_hash[:AutoLoad] = true,
-# options_hash[:CurrencyCode] = 'USD'
-# response = client.eWallet_request(options_hash, {})
+# params_hash = {}
+# params_hash[:fn] = 'eWallet_Load',
+# params_hash[:MerchantGUID] =IPAYOUT_MERCHANT_GUID,
+# params_hash[:MerchantPassword] =IPAYOUT_MERCHANT_PASSWORD,
+# params_hash[:PartnerBatchID] = DateTime.now.to_s,
+# params_hash[:PoolID] = '',
+# params_hash[:arrAccounts] = [{:UserName => 'dmcalerney', :Amount => 20.50, :Comments => 'Test Test Test', :MerchantReferenceID => 'a4739056-7db6-40f3-9618-f2bcccbf70cc'}],
+# params_hash[:AllowDuplicates] = true,
+# params_hash[:AutoLoad] = true,
+# params_hash[:CurrencyCode] = 'USD'
+# response = client.eWallet_request(params_hash, {})
 ################### eWallet_Load #######################################
 
 
 ################### eWallet_GetUserAccountStatus ###############################
-# options_hash = {}
-# options_hash[:fn] = 'eWallet_GetUserAccountStatus'
-# options_hash[:endpoint] = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
-# options_hash[:MerchantGUID] =IPAYOUT_MERCHANT_GUID
-# options_hash[:MerchantPassword] =IPAYOUT_MERCHANT_PASSWORD
-# options_hash[:UserName] = 'dmcalerney'
-# response = client.eWallet_request(options_hash, {})
+# params_hash = {}
+# params_hash[:fn] = 'eWallet_GetUserAccountStatus'
+# params_hash[:endpoint] = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
+# params_hash[:MerchantGUID] =IPAYOUT_MERCHANT_GUID
+# params_hash[:MerchantPassword] =IPAYOUT_MERCHANT_PASSWORD
+# params_hash[:UserName] = 'dmcalerney'
+# response = client.eWallet_request(params_hash, {})
 ################### eWallet_GetUserAccountStatus ###############################
 
 ################### eWallet_GetCurrencyBalance #################################
-# options_hash = {}
-# options_hash[:fn] = 'eWallet_GetCurrencyBalance'
-# options_hash[:endpoint] = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
-# options_hash[:MerchantGUID] =IPAYOUT_MERCHANT_GUID
-# options_hash[:MerchantPassword] =IPAYOUT_MERCHANT_PASSWORD
-# options_hash[:UserName] = 'dmcalerney'
-# options_hash[:CurrencyCode] = 'USD'
-# response = client.eWallet_request(options_hash, {})
+# params_hash = {}
+# params_hash[:fn] = 'eWallet_GetCurrencyBalance'
+# params_hash[:endpoint] = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
+# params_hash[:MerchantGUID] =IPAYOUT_MERCHANT_GUID
+# params_hash[:MerchantPassword] =IPAYOUT_MERCHANT_PASSWORD
+# params_hash[:UserName] = 'dmcalerney'
+# params_hash[:CurrencyCode] = 'USD'
+# response = client.eWallet_request(params_hash, {})
 ################### eWallet_GetCurrencyBalance #################################
 
 ################### eWallet_RequestUserAutoLogin #################################
@@ -185,13 +189,13 @@ response = client.eWallet_request(options_hash, {})
 #    "CustomerFeeAmount"=>0.0,
 #    "CurrencyCode"=>nil}
 
-# options_hash = {}
-# options_hash[:fn] = 'eWallet_RequestUserAutoLogin'
-# options_hash[:endpoint] = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
-# options_hash[:MerchantGUID] =IPAYOUT_MERCHANT_GUID
-# options_hash[:MerchantPassword] =IPAYOUT_MERCHANT_PASSWORD
-# options_hash[:UserName] = 'dmcalerney'
-# response = client.eWallet_request(options_hash, {})
+# params_hash = {}
+# params_hash[:fn] = 'eWallet_RequestUserAutoLogin'
+# params_hash[:endpoint] = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
+# params_hash[:MerchantGUID] =IPAYOUT_MERCHANT_GUID
+# params_hash[:MerchantPassword] =IPAYOUT_MERCHANT_PASSWORD
+# params_hash[:UserName] = 'dmcalerney'
+# response = client.eWallet_request(params_hash, {})
 ################### eWallet_RequestUserAutoLogin #################################
 
 byebug

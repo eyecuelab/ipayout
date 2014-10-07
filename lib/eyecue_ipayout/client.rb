@@ -10,14 +10,16 @@ module EyecueIpayout
     # this call out in to seperate client calls.
     # For this API, we pass the function call along
     # with the rest of the parameters in the 'fn' param
-    def ewallet_request(params = {}, _options = {})
+    def ewallet_request(params = {})
       puts '!!!!!!EyecueIpayout::Client -> eWallet_Request'
       # BYEBUG CHECK CONNECTION
-      # byebug
-      response = connection.post do |req|
-        req.url = params['endpoint']
+      byebug
+      response = connection.post params[:endpoint] do |req|
+        byebug
+        #req.url = params['endpoint']
         req.headers['Content-Type'] = 'application/json'
         req.body = params.to_json
+        byebug
         # byebug
       end
       response.body.response

@@ -14,7 +14,7 @@ module EyecueIpayout
     # @instantiate EyecueIpayout::Service.new("eWallet_GetCustomerDetails")
 
     def initialize(name)
-      puts "!!!!!!EyecueIpayout::Service ->INITIALIZE"
+      puts '!!!!!!EyecueIpayout::Service ->INITIALIZE'
       @name = name
       @request_param_names = []
       @response_param_names = []
@@ -44,7 +44,6 @@ module EyecueIpayout
     # without having to instantiate the ServiceParam
     # outside of this class.
     def add_param(param_name, expected_type, required)
-      puts "!!!!!!EyecueIpayout::Service ->add_param"
       unless @parameters.key? param_name
         param = EyecueIpayout::ServiceParam.new(param_name,
                                                 expected_type,

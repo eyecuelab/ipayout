@@ -39,7 +39,6 @@ module EyecueIpayout
       :access_token,
       :proxy,
       :user_agent,
-      :url,
       :endpoint
     ]
 
@@ -72,7 +71,6 @@ module EyecueIpayout
       self.proxy              = DEFAULT_PROXY
       self.user_agent         = DEFAULT_USER_AGENT
       self.endpoint           = DEFAULT_ENDPOINT
-      self.url                = DEFAULT_URL
       self
     end
   end

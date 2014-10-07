@@ -11,8 +11,6 @@ module EyecueIpayout
     # Creates a new API
     def initialize(options = {})
       puts '!!!!!!EyecueIpayout::API -> initialize'
-      # byebug check options
-      byebug
       options = EyecueIpayout.options.merge(options)
       @service_param_map = EyecueIpayout::ServiceParamMap.new
       Config::VALID_OPTIONS_KEYS.each do |key|
