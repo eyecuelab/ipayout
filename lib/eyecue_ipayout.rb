@@ -11,7 +11,8 @@ module EyecueIpayout
     # @return [EyecueIpayout::Client]
     def new(options={})
 
-    options_hash = {:url => ENV['IPAYOUT_API_ENDPOINT']}
+      options_hash = {}
+      options_hash[:url = ENV['IPAYOUT_API_ENDPOINT']
       EyecueIpayout::Client.new(options_hash)
     }
     end
