@@ -13,11 +13,13 @@ module EyecueIpayout
     # with the rest of the parameters in the 'fn' param
     def eWallet_request(params = {}, options = {})
       puts "!!!!!!EyecueIpayout::Client -> eWallet_Request"
-      #byebug
+      # BYEBUG CHECK CONNECTION
+      byebug
       response = connection.post do |req|
         req.url = params['endpoint']
         req.headers['Content-Type'] = 'application/json'
         req.body = params.to_json
+        byebug
       end
       response.body.response
     end
