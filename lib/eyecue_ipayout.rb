@@ -5,16 +5,14 @@ require 'eyecue_ipayout/service_param'
 module EyecueIpayout
   extend Config
   class << self
-    
+
     # Alias for EyecueIpayout::Client.new
     #
     # @return [EyecueIpayout::Client]
-    def new(options={})
-
+    def new()
       options_hash = {}
       options_hash[:url] = ENV['IPAYOUT_API_ENDPOINT']
       EyecueIpayout::Client.new(options_hash)
-    
     end
 
     # Delegate to EyecueIpayout::Client
