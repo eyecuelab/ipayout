@@ -18,7 +18,8 @@ ipayout_client_options = {:IPAYOUT_API_ENDPOINT => IPAYOUT_API_ENDPOINT,
                           :IPAYOUT_MERCHANT_PASSWORD=>IPAYOUT_MERCHANT_PASSWORD}
 
 client = EyecueIpayout.new()
-service = client.get_service("eWallet_RegisterUser")
+
+service = client.get_service("eWallet_GetCustomerDetails")
 
 byebug
 
@@ -56,13 +57,13 @@ byebug
 # service.add_param('IsBusinessUser', 'String', false)
 # service.add_param('BusinessUserName', 'String', false)
 
-service.response_parameters = ['m_Code', 'm_Text', 'LogTransactionID',
-                               'TransactionRefID', 'ACHTransactionID',
-                               'ProcessorTransactionRefNumber',
-                               'CustomerFeeAmount', 'CurrencyCode']
+# service.response_parameters = ['m_Code', 'm_Text', 'LogTransactionID',
+#                                'TransactionRefID', 'ACHTransactionID',
+#                                'ProcessorTransactionRefNumber',
+#                                'CustomerFeeAmount', 'CurrencyCode']
 
 
-byebug
+# byebug
 
 ################################
 # eWallet_RegisterUser - OK
@@ -110,13 +111,13 @@ byebug
 
 
 ################### eWallet_GetCustomerDetails#######################################
-# options_hash = {}
-# options_hash[:fn] = 'eWallet_GetCustomerDetails'
-# options_hash[:endpoint] = IPAYOUT_API_ENDPOINT
-# options_hash[:MerchantGUID] = IPAYOUT_MERCHANT_GUID
-# options_hash[:MerchantPassword] = IPAYOUT_MERCHANT_PASSWORD
-# options_hash[:UserName] = 'dmcalerney'
-# response = client.eWallet_request(options_hash, {})
+options_hash = {}
+options_hash[:fn] = 'eWallet_GetCustomerDetails'
+options_hash[:endpoint] = IPAYOUT_API_ENDPOINT
+options_hash[:MerchantGUID] = IPAYOUT_MERCHANT_GUID
+options_hash[:MerchantPassword] = IPAYOUT_MERCHANT_PASSWORD
+options_hash[:UserName] = 'dmcalerney'
+response = client.eWallet_request(options_hash, {})
 
 # "{'fn':'eWallet_GetCustomerDetails','endpoint':'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx','MerchantGUID':'a4739056-7db6-40f3-9618-f2bcccbf70cc','MerchantPassword':'9xXLvA66hi','UserName':'dmcalerney'}"
 

@@ -26,11 +26,11 @@ module EyecueIpayout
       }
       
       faraday_options = connection_options.deep_merge(default_options)
-      faraday_options[:url] = ENV['IPAYOUT_API_ENDPOINT']
+      faraday_options['url'] = ENV['IPAYOUT_API_ENDPOINT']
       puts "!!!!!!EyecueIpayout::Connection->Connection...instantiate connection"
-      byebug
+      #byebug
       @connection = Faraday.new(faraday_options) do |faraday|
-        byebug
+        #byebug
         faraday.adapter Faraday.default_adapter
         faraday.use EyecueIpayout::Response::RaiseClientError
         faraday.use EyecueIpayout::Response::RaiseServerError
@@ -39,7 +39,7 @@ module EyecueIpayout
         faraday.request  :url_encoded
         faraday.response :logger
       end
-      byebug
+      #byebug
       @connection
     end
   end
