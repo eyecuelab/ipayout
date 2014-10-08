@@ -40,6 +40,17 @@ module EyecueIpayout
       @parameters.keys
     end
 
+    # our native parameters hash holds service_param
+    # objects.  This returns the param_name => param_value hash
+    def param_hash
+      param_hash = {}
+      @parameters.each do |param_name, param_obj|
+        param_hash[param_name] = param_obj.value
+      end
+      param_hash
+      byebug
+    end
+
     # This is a shortcut method for adding parameters
     # without having to instantiate the ServiceParam
     # outside of this class.

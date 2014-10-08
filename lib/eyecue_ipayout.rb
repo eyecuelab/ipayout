@@ -8,8 +8,8 @@ module EyecueIpayout
     # Alias for EyecueIpayout::Client.new
     #
     # @return [EyecueIpayout::Client]
-    def new()
-      EyecueIpayout::Client.new()
+    def new
+      EyecueIpayout::Client.new
     end
 
     # Delegate to EyecueIpayout::Client

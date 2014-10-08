@@ -19,15 +19,11 @@ ipayout_client_options = {:IPAYOUT_API_ENDPOINT => IPAYOUT_API_ENDPOINT,
 
 client = EyecueIpayout.new()
 
-#service = client.get_service("eWallet_GetCustomerDetails")
-
 puts 'Call eWallet_GetCustomerDetails'
 service = client.get_service('get_customer_details')
-# request_params = service.request_param_list
 options_hash   = assign_param_values(params, service.parameters)
-# service_params = assign_param_values(params, service.parameters)
-# options_hash = reduce_to_param_hash(service_params)
-response = client.ewallet_request(options_hash, {})
+response = client.ewallet_request(options_hash)
+byebug
 byebug
 response
 # service = EyecueIpayout::Service.new("eWallet_RegisterUser")

@@ -15,13 +15,12 @@ module EyecueIpayout
       # BYEBUG CHECK CONNECTION
       byebug
       response = connection.post params[:endpoint] do |req|
-        byebug
         #req.url = params['endpoint']
         req.headers['Content-Type'] = 'application/json'
         req.body = params.to_json
         byebug
-        # byebug
       end
+      byebug
       response.body.response
     end
 
