@@ -47,8 +47,10 @@ module EyecueIpayout
       @parameters.each do |param_name, param_obj|
         param_hash[param_name] = param_obj.value
       end
+      puts "PARAM HASH:"
+      puts param_hash
       param_hash
-      byebug
+
     end
 
     # This is a shortcut method for adding parameters

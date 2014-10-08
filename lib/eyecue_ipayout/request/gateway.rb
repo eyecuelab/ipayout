@@ -6,7 +6,6 @@ module EyecueIpayout
 
       def call(env)
         puts "!!!!!!EyecueIpayout::Gateway -> call"
-        #byebug
         url = env[:url].dup
         url.host = @gateway
         env[:url] = url
