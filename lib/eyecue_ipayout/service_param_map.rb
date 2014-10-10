@@ -13,7 +13,7 @@ module EyecueIpayout
     # @return [EyecueIpayout::ServiceParam]
     # @instantiate EyecueIpayout::ServiceParam.new("FirstName", "String", true)
 
-    def initialize
+    def Initializes
       @ewallet_services = {}
       build_service_map
     end
@@ -78,8 +78,42 @@ module EyecueIpayout
                     'PreferredLanguage', 'SVCShippingAddress']
       get_customer_details_service.response_parameters = res_params
 
+      #  eWallet_GetUserAccountStatus Service
+      get_user_account_status_service = EyecueIpayout::Service.new("get_user_account_status")
+      get_user_account_status_service.add_param('fn', 'String', true)
+      get_user_account_status_service.add_param('endpoint', 'String', true)
+      get_user_account_status_service.add_param('MerchantGUID', 'String', true)
+      get_user_account_status_service.add_param('MerchantPassword', 'String', true)
+
+
+      #  eWallet_GetUserAccountStatus Service
+      ewallet_load = EyecueIpayout::Service.new("get_user_account_status")
+      ewallet_load.add_param('fn', 'String', true)
+      ewallet_load.add_param('endpoint', 'String', true)
+      ewallet_load.add_param('MerchantGUID', 'String', true)
+      ewallet_load.add_param('MerchantPassword', 'String', true)
+      ewallet_load.add_param('PartnerBatchID', 'String', true)
+      ewallet_load.add_param('PoolID', 'String', true)
+      ewallet_load.add_param('MerchantPassword', 'String', true)
+      ewallet_load.add_param('arrAccounts', 'String', true)
+      ewallet_load.add_param('AllowDuplicates', 'String', true)
+      ewallet_load.add_param('AutoLoad', 'Boolean', true)
+      ewallet_load.add_param('CurrencyCode', 'Boolean', true)
+
+# params_hash[:fn] = 'eWallet_Load',
+# params_hash[:MerchantGUID] =IPAYOUT_MERCHANT_GUID,
+# params_hash[:MerchantPassword] =IPAYOUT_MERCHANT_PASSWORD,
+# params_hash[:PartnerBatchID] = DateTime.now.to_s,
+# params_hash[:PoolID] = '',
+# params_hash[:arrAccounts] = [{:UserName => 'dmcalerney', :Amount => 20.50, :Comments => 'Test Test Test', :MerchantReferenceID => 'a4739056-7db6-40f3-9618-f2bcccbf70cc'}],
+# params_hash[:AllowDuplicates] = true,
+# params_hash[:AutoLoad] = true,
+# params_hash[:CurrencyCode] = 'USD'
+
+
       @ewallet_services['register_user'] = register_user_service
       @ewallet_services['get_customer_details'] = get_customer_details_service
+      @ewallet_services['get_user_account_status] = get_user_account_status_service
     end
   end
 end
