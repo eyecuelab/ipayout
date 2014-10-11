@@ -14,7 +14,6 @@ module EyecueIpayout
     # @instantiate EyecueIpayout::Service.new("eWallet_GetCustomerDetails")
 
     def initialize(name)
-      puts '!!!!!!EyecueIpayout::Service ->INITIALIZE'
       @name = name
       @request_param_names = []
       @response_param_names = []

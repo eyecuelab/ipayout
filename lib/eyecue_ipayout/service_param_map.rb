@@ -13,18 +13,19 @@ module EyecueIpayout
     # @return [EyecueIpayout::ServiceParam]
     # @instantiate EyecueIpayout::ServiceParam.new("FirstName", "String", true)
 
-    def Initializes
+    def initialize
+      puts '!!!!!!!!!INITIALIZE SERVICE PARAM MAP'
       @ewallet_services = {}
       build_service_map
     end
 
     def get_service_by_name(service_name)
-      ewallet_services[service_name] if ewallet_services.key? service_name
+      @ewallet_services[service_name] if @ewallet_services.key? service_name
     end
 
     def build_service_map
       #  eWallet_RegisterUser Service Map
-      register_user_service = EyecueIpayout::Service.new("register_user")
+      register_user_service = EyecueIpayout::Service.new('register_user')
       register_user_service.add_param('fn', 'String', true)
       register_user_service.add_param('endpoint', 'String', true)
       register_user_service.add_param('MerchantGUID', 'String', true)
@@ -63,7 +64,7 @@ module EyecueIpayout
                                                    'CustomerFeeAmount', 'CurrencyCode']
 
       #  eWallet_GetCustomerDetails Service Map
-      get_customer_details_service = EyecueIpayout::Service.new("get_customer_details")
+      get_customer_details_service = EyecueIpayout::Service.new('get_customer_details')
       get_customer_details_service.add_param('fn', 'String', true)
       get_customer_details_service.add_param('endpoint', 'String', true)
       get_customer_details_service.add_param('MerchantGUID', 'String', true)
@@ -79,41 +80,32 @@ module EyecueIpayout
       get_customer_details_service.response_parameters = res_params
 
       #  eWallet_GetUserAccountStatus Service
-      get_user_account_status_service = EyecueIpayout::Service.new("get_user_account_status")
+      get_user_account_status_service = EyecueIpayout::Service.new('get_user_account_status')
       get_user_account_status_service.add_param('fn', 'String', true)
       get_user_account_status_service.add_param('endpoint', 'String', true)
       get_user_account_status_service.add_param('MerchantGUID', 'String', true)
-      get_user_account_status_service.add_param('MerchantPassword', 'String', true)
+      get_user_account_status_service.add_param('MerchantPassword',
+                                                'String', true)
 
-
-      #  eWallet_GetUserAccountStatus Service
-      ewallet_load = EyecueIpayout::Service.new("get_user_account_status")
-      ewallet_load.add_param('fn', 'String', true)
-      ewallet_load.add_param('endpoint', 'String', true)
-      ewallet_load.add_param('MerchantGUID', 'String', true)
-      ewallet_load.add_param('MerchantPassword', 'String', true)
-      ewallet_load.add_param('PartnerBatchID', 'String', true)
-      ewallet_load.add_param('PoolID', 'String', true)
-      ewallet_load.add_param('MerchantPassword', 'String', true)
-      ewallet_load.add_param('arrAccounts', 'String', true)
-      ewallet_load.add_param('AllowDuplicates', 'String', true)
-      ewallet_load.add_param('AutoLoad', 'Boolean', true)
-      ewallet_load.add_param('CurrencyCode', 'Boolean', true)
-
-# params_hash[:fn] = 'eWallet_Load',
-# params_hash[:MerchantGUID] =IPAYOUT_MERCHANT_GUID,
-# params_hash[:MerchantPassword] =IPAYOUT_MERCHANT_PASSWORD,
-# params_hash[:PartnerBatchID] = DateTime.now.to_s,
-# params_hash[:PoolID] = '',
-# params_hash[:arrAccounts] = [{:UserName => 'dmcalerney', :Amount => 20.50, :Comments => 'Test Test Test', :MerchantReferenceID => 'a4739056-7db6-40f3-9618-f2bcccbf70cc'}],
-# params_hash[:AllowDuplicates] = true,
-# params_hash[:AutoLoad] = true,
-# params_hash[:CurrencyCode] = 'USD'
-
+      #  eWallet_G_serviceetUserAccountStatus Service
+      ewallet_load_service = EyecueIpayout::Service.new('ewallet_load')
+      ewallet_load_service.add_param('fn', 'String', true)
+      ewallet_load_service.add_param('endpoint', 'String', true)
+      ewallet_load_service.add_param('MerchantGUID', 'String', true)
+      ewallet_load_service.add_param('MerchantPassword', 'String', true)
+      ewallet_load_service.add_param('PartnerBatchID', 'String', true)
+      ewallet_load_service.add_param('PoolID', 'String', true)
+      ewallet_load_service.add_param('MerchantPassword', 'String', true)
+      ewallet_load_service.add_param('arrAccounts', 'String', true)
+      ewallet_load_service.add_param('AllowDuplicates', 'String', true)
+      ewallet_load_service.add_param('AutoLoad', 'Boolean', true)
+      ewallet_load_service.add_param('CurrencyCode', 'Boolean', true)
+      ewallet_load_service.response_parameters = ['m_Code', 'm_Text']
 
       @ewallet_services['register_user'] = register_user_service
       @ewallet_services['get_customer_details'] = get_customer_details_service
-      @ewallet_services['get_user_account_status] = get_user_account_status_service
+      @ewallet_services['get_user_account_status'] = get_user_account_status_service
+      @ewallet_services['ewallet_load'] = ewallet_load_service
     end
   end
 end
