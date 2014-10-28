@@ -117,16 +117,16 @@ Here's the guts of that JSON request (to the test server, in this example):
 
 ### Which services can I hit?
 
-# Register a new user with iPayout
+#### Register a new user with iPayout
 client.ewallet_request('register_user')
 
-# Get an iPayout user's account details
+#### Get an iPayout user's account details
 client.ewallet_request('get_customer_details')
 
-# See if their account is active
+#### See if their account is active
 client.ewallet_request('get_user_account_status')
 
-# Distribute money to an iPayout user
+#### Distribute money to an iPayout user
 client.ewallet_request('ewallet_load')
 
 ## The Response
