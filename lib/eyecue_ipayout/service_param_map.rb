@@ -69,6 +69,7 @@ module EyecueIpayout
       get_customer_details_service.add_param('endpoint', 'String', true)
       get_customer_details_service.add_param('MerchantGUID', 'String', true)
       get_customer_details_service.add_param('MerchantPassword', 'String', true)
+      get_customer_details_service.add_param('UserName', 'String', true)
 
       res_params = ['UserName', 'CustomerGuid', 'IsActivated', 'Email',
                     'FirstName', 'LastName', 'CompanyName', 'Phone',
@@ -86,6 +87,7 @@ module EyecueIpayout
       get_user_account_status_service.add_param('MerchantGUID', 'String', true)
       get_user_account_status_service.add_param('MerchantPassword',
                                                 'String', true)
+      get_user_account_status_service.add_param('UserName', 'String', true)
 
       #  eWallet_G_serviceetUserAccountStatus Service
       ewallet_load_service = EyecueIpayout::Service.new('ewallet_load')
