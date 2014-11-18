@@ -26,7 +26,7 @@ module EyecueIpayout
 
 
       faraday_options = connection_options.deep_merge(default_options)
-      faraday_options['url'] = ENV['IPAYOUT_API_ENDPOINT']
+      faraday_options['url'] = Rails.application.secrets[:IPAYOUT_API_ENDPOINT]
       puts '!!!!!!EyecueIpayout::Connection->Connection...inst connection'
       # @connection = Faraday.new(faraday_options['url']) do |faraday|
 

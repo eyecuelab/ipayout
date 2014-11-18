@@ -35,9 +35,9 @@ them based on the Rails environment that is
 running (eg. production, development...)
 
     #this example is set to use their testing sandbox
-    ENV['IPAYOUT_API_ENDPOINT'] = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
-    ENV['IPAYOUT_MERCHANT_GUID'] = <YOUR MERCHANT GUID>
-    ENV['IPAYOUT_MERCHANT_PASSWORD'] = <YOUR MERCHANT PASSWORD>
+    Rails.application.secrets[:IPAYOUT_API_ENDPOINT] = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
+    Rails.application.secrets[:IPAYOUT_MERCHANT_GUID] = <YOUR MERCHANT GUID>
+    Rails.application.secrets[:IPAYOUT_MERCHANT_PASSWORD] = <YOUR MERCHANT PASSWORD>
 
 ## Developmet
 

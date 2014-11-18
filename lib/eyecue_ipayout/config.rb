@@ -3,9 +3,9 @@ require 'eyecue_ipayout/version'
 module EyecueIpayout
   # Defines constants and methods related to configuration
   module Config
-    IPAYOUT_API_ENDPOINT = ENV['IPAYOUT_API_ENDPOINT']
-    IPAYOUT_MERCHANT_GUID = ENV['IPAYOUT_MERCHANT_GUID']
-    IPAYOUT_MERCHANT_PASSWORD = ENV['IPAYOUT_MERCHANT_PASSWORD']
+    IPAYOUT_API_ENDPOINT = Rails.application.secrets[:IPAYOUT_API_ENDPOINT]
+    IPAYOUT_MERCHANT_GUID = Rails.application.secrets[:IPAYOUT_MERCHANT_GUID]
+    IPAYOUT_MERCHANT_PASSWORD = Rails.application.secrets[:IPAYOUT_MERCHANT_PASSWORD]
 
     # The access token if none is set
     DEFAULT_ACCESS_TOKEN = nil
@@ -17,8 +17,8 @@ module EyecueIpayout
     DEFAULT_CONNECTION_OPTIONS = {}
 
     # The endpoint that will be used to connect if none is set
-    DEFAULT_ENDPOINT = ENV["IPAYOUT_API_ENDPOINT"]
-    DEFAULT_URL = ENV["IPAYOUT_API_ENDPOINT"]
+    DEFAULT_ENDPOINT = Rails.application.secrets[:IPAYOUT_API_ENDPOINT]
+    DEFAULT_URL = Rails.application.secrets[:IPAYOUT_API_ENDPOINT]
 
     # The gateway server if none is set
     DEFAULT_GATEWAY = nil
