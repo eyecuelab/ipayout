@@ -14,12 +14,13 @@ module EyecueIpayout
     # services are specified throgh the fn parameter
     def ewallet_request(params = {})
       puts '!!!!!!EyecueIpayout::Client -> eWallet_Request'
+
       response = connection.post params[:endpoint] do |req|
         req.headers['Content-Type'] = 'application/json'
         req.body = params.to_json
       end
 
-      puts response.body.response
+
       response.body.response
     end
 

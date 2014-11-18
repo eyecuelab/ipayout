@@ -7,7 +7,7 @@ module EyecueIpayout
     include Connection
 
     attr_reader :service_param_map
-    attr_accessor *Config::VALID_OPTIONS_KEYS
+    attr_accessor(*Config::VALID_OPTIONS_KEYS)
     # Creates a new API
     def initialize(options = {})
       options = EyecueIpayout.options.merge(options)
