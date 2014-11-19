@@ -1,4 +1,5 @@
 require 'eyecue_ipayout/config'
+require 'eyecue_ipayout/configuration'
 require 'eyecue_ipayout/connection'
 require 'eyecue_ipayout/service_param_map'
 

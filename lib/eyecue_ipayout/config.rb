@@ -1,11 +1,18 @@
 require 'eyecue_ipayout/version'
 module EyecueIpayout
   module Config
-    IPAYOUT_API_ENDPOINT = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
-    IPAYOUT_MERCHANT_GUID = 'a4739056-7db6-40f3-9618-f2bcccbf70cc'
-    IPAYOUT_MERCHANT_PASSWORD = '9xXLvA66hi'
+    # IPAYOUT_API_ENDPOINT = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
+    # IPAYOUT_MERCHANT_GUID = 'a4739056-7db6-40f3-9618-f2bcccbf70cc'
+    # IPAYOUT_MERCHANT_PASSWORD = '9xXLvA66hi'
     # end
     # The access token if none is set
+    class << self
+      attr_accessor :merchant_guid
+      attr_accessor :merchant_password
+      attr_accessor :endpoint
+    end
+    # EyecueIpayout::Config.configure({endpoint: "https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx", merchant_password: "xxxxxxxxxxx", merchant_guid: "x0x0xx0"})
+
     DEFAULT_ACCESS_TOKEN = nil
 
     # The HTTP connection adapter that will be used to connect if none is set
@@ -15,8 +22,8 @@ module EyecueIpayout
     DEFAULT_CONNECTION_OPTIONS = {}
 
     # The endpoint that will be used to connect if none is set
-    DEFAULT_ENDPOINT = IPAYOUT_API_ENDPOINT
-    DEFAULT_URL = IPAYOUT_API_ENDPOINT
+    DEFAULT_ENDPOINT = self.endpoint
+    DEFAULT_URL = self.endpoint
 
     # The gateway server if none is set
     DEFAULT_GATEWAY = nil
@@ -49,10 +56,10 @@ module EyecueIpayout
       base.reset
     end
 
-    # Convenience method to allow configuration options to be set in a block
-    def configure
-      yield self
-    end
+    # # Convenience method to allow configuration options to be set in a block
+    # def configure
+    #   yield self
+    # end
 
     # Create a hash of options and their values
     def options
@@ -70,9 +77,6 @@ module EyecueIpayout
       self.gateway            = DEFAULT_GATEWAY
       self.proxy              = DEFAULT_PROXY
       self.user_agent         = DEFAULT_USER_AGENT
-      self.endpoint           = DEFAULT_ENDPOINT
-      self.merchant_guid      = IPAYOUT_MERCHANT_GUID
-      self.merchant_password  = IPAYOUT_MERCHANT_PASSWORD
       self
     end
   end

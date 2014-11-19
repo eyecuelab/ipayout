@@ -1,20 +1,13 @@
 require 'eyecue_ipayout/client'
 require 'eyecue_ipayout/config'
+require 'eyecue_ipayout/configuration'
 require 'eyecue_ipayout/service'
 require 'eyecue_ipayout/service_param'
+require 'byebug'
 module EyecueIpayout
   extend Config
   class << self
-
-    # attr_writer :configuration
-
-    # def self.configuration
-    #   @configuration ||= Configuration.new
-    # end
-
-    # def self.reset
-    #   @configuration = Configuration.new
-    # end
+    attr_accessor :configuration
 
     # Alias for EyecueIpayout::Client.new
     #
@@ -32,5 +25,17 @@ module EyecueIpayout
     def respond_to?(method, include_private = false)
       new.respond_to?(method, include_private) || super(method, include_private)
     end
+  end
+
+  def self.reset
+    @configuration = Configuration.new
+  end
+
+  def self.configuration
+    @configuration ||= Configuration.new
+  end
+
+  def self.configure
+    yield(configuration)
   end
 end
