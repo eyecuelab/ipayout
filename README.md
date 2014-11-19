@@ -35,11 +35,11 @@ them based on the Rails environment that is
 running (eg. production, development...)
 
     #this example is set to use their testing sandbox
-    Rails.application.secrets[:IPAYOUT_API_ENDPOINT] = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
-    Rails.application.secrets[:IPAYOUT_MERCHANT_GUID] = <YOUR MERCHANT GUID>
-    Rails.application.secrets[:IPAYOUT_MERCHANT_PASSWORD] = <YOUR MERCHANT PASSWORD>
+    EyecueIpayout.endpoint = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
+    EyecueIpayout.merchant_guid = <YOUR MERCHANT GUID>
+    EyecueIpayout.merchant_password = <YOUR MERCHANT PASSWORD>
 
-## Developmet
+## Development
 
 If you are developing this gem on your local machine, here's a
 decent workflow that handles building and updating the gem. Some
@@ -80,7 +80,7 @@ The Client is the higher-level object that speaks to the iPayout eWallet API. It
   options_hash[:fn] = 'eWallet_GetCustomerDetails'
   options_hash[:endpoint] = IPAYOUT_API_ENDPOINT
   options_hash[:MerchantGUID] = IPAYOUT_MERCHANT_GUID
-  options_hash[:MerchantPassword] = IPAYOUT_MERCHANT_PASSWORD
+  options_hash[:MerchantPassword] = EyecueIpayout.merchant_password
   options_hash[:UserName] = 'Glen Danzig'
 
   service_name = "get_customer_details"

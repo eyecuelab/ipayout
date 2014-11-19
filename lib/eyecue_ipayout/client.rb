@@ -1,4 +1,4 @@
-  require 'cgi'
+require 'cgi'
 require 'eyecue_ipayout/api'
 
 module EyecueIpayout

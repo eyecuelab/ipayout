@@ -1,12 +1,10 @@
 require 'eyecue_ipayout/version'
-
 module EyecueIpayout
-  # Defines constants and methods related to configuration
   module Config
-    IPAYOUT_API_ENDPOINT = Rails.application.secrets[:IPAYOUT_API_ENDPOINT]
-    IPAYOUT_MERCHANT_GUID = Rails.application.secrets[:IPAYOUT_MERCHANT_GUID]
-    IPAYOUT_MERCHANT_PASSWORD = Rails.application.secrets[:IPAYOUT_MERCHANT_PASSWORD]
-
+    IPAYOUT_API_ENDPOINT = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
+    IPAYOUT_MERCHANT_GUID = 'a4739056-7db6-40f3-9618-f2bcccbf70cc'
+    IPAYOUT_MERCHANT_PASSWORD = '9xXLvA66hi'
+    # end
     # The access token if none is set
     DEFAULT_ACCESS_TOKEN = nil
 
@@ -17,8 +15,8 @@ module EyecueIpayout
     DEFAULT_CONNECTION_OPTIONS = {}
 
     # The endpoint that will be used to connect if none is set
-    DEFAULT_ENDPOINT = Rails.application.secrets[:IPAYOUT_API_ENDPOINT]
-    DEFAULT_URL = Rails.application.secrets[:IPAYOUT_API_ENDPOINT]
+    DEFAULT_ENDPOINT = IPAYOUT_API_ENDPOINT
+    DEFAULT_URL = IPAYOUT_API_ENDPOINT
 
     # The gateway server if none is set
     DEFAULT_GATEWAY = nil
@@ -39,7 +37,9 @@ module EyecueIpayout
       :access_token,
       :proxy,
       :user_agent,
-      :endpoint
+      :endpoint,
+      :merchant_guid,
+      :merchant_password
     ]
 
     attr_accessor *VALID_OPTIONS_KEYS
@@ -71,6 +71,8 @@ module EyecueIpayout
       self.proxy              = DEFAULT_PROXY
       self.user_agent         = DEFAULT_USER_AGENT
       self.endpoint           = DEFAULT_ENDPOINT
+      self.merchant_guid      = IPAYOUT_MERCHANT_GUID
+      self.merchant_password  = IPAYOUT_MERCHANT_PASSWORD
       self
     end
   end

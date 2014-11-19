@@ -2,30 +2,30 @@ require 'byebug'
 require 'eyecue_ipayout'
 require 'json'
 require 'date'
-# require 'eyecue_ipayout/service'
+require 'eyecue_ipayout/config'
 # require 'eyecue_ipayout/service_params'
 
-IPAYOUT_API_ENDPOINT = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
-IPAYOUT_MERCHANT_GUID = 'a4739056-7db6-40f3-9618-f2bcccbf70cc'
-IPAYOUT_MERCHANT_PASSWORD = '9xXLvA66hi'
+# IPAYOUT_API_ENDPOINT = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
+# IPAYOUT_MERCHANT_GUID = 'a4739056-7db6-40f3-9618-f2bcccbf70cc'
+# IPAYOUT_MERCHANT_PASSWORD = '9xXLvA66hi'
 
-Rails.application.secrets[:IPAYOUT_API_ENDPOINT] = IPAYOUT_API_ENDPOINT
-Rails.application.secrets[:IPAYOUT_MERCHANT_GUID] = IPAYOUT_MERCHANT_GUID
-Rails.application.secrets[:IPAYOUT_MERCHANT_PASSWORD] = IPAYOUT_MERCHANT_PASSWORD
+# Rails.application.secrets[:IPAYOUT_API_ENDPOINT] = IPAYOUT_API_ENDPOINT
+# Rails.application.secrets[:IPAYOUT_MERCHANT_GUID] = IPAYOUT_MERCHANT_GUID
+# Rails.application.secrets[:IPAYOUT_MERCHANT_PASSWORD] = IPAYOUT_MERCHANT_PASSWORD
 
-ipayout_client_options = {:IPAYOUT_API_ENDPOINT => IPAYOUT_API_ENDPOINT,
-                          :IPAYOUT_MERCHANT_GUID => IPAYOUT_MERCHANT_GUID,
-                          :IPAYOUT_MERCHANT_PASSWORD=>IPAYOUT_MERCHANT_PASSWORD}
+ipayout_client_options = {:IPAYOUT_API_ENDPOINT => EyecueIpayout.endpoint,
+                          :IPAYOUT_MERCHANT_GUID => EyecueIpayout.merchant_guid,
+                          :IPAYOUT_MERCHANT_PASSWORD => EyecueIpayout.merchant_password}
 
 client = EyecueIpayout.new()
-
-puts 'Call eWallet_GetCustomerDetails'
-service = client.get_service('get_customer_details')
-options_hash   = assign_param_values(params, service.parameters)
-response = client.ewallet_request(options_hash)
 byebug
 
-response
+# puts 'Call eWallet_GetCustomerDetails'
+# service = client.get_service('get_customer_details')
+# options_hash   = assign_param_values(params, service.parameters)
+# response = client.ewallet_request(options_hash)
+
+#response
 # service = EyecueIpayout::Service.new("eWallet_RegisterUser")
 # service.add_param('fn', 'String', true)
 # service.add_param('endpoint', 'String', true)
@@ -194,6 +194,5 @@ response
 # response = client.eWallet_request(params_hash, {})
 ################### eWallet_RequestUserAutoLogin #################################
 
-byebug
 puts '!!!!!!!END!!!!!!!'
 puts ''

@@ -5,6 +5,17 @@ require 'eyecue_ipayout/service_param'
 module EyecueIpayout
   extend Config
   class << self
+
+    # attr_writer :configuration
+
+    # def self.configuration
+    #   @configuration ||= Configuration.new
+    # end
+
+    # def self.reset
+    #   @configuration = Configuration.new
+    # end
+
     # Alias for EyecueIpayout::Client.new
     #
     # @return [EyecueIpayout::Client]
