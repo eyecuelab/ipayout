@@ -38,4 +38,16 @@ module EyecueIpayout
   def self.configure
     yield(configuration)
   end
+
+  # if ENV['IPAYOUT_API_ENDPOINT']
+  #   self.endpoint = ENV['IPAYOUT_API_ENDPOINT']
+  # end
+
+  # if ENV['IPAYOUT_MERCHANT_PASSWORD']
+  #   self.merchant_password = ENV['IPAYOUT_MERCHANT_PASSWORD']
+  # end
+
+  # if ENV['IPAYOUT_MERCHANT_GUID']
+  #   self.merchant_guid = ENV['IPAYOUT_MERCHANT_GUID']
+  # end
 end

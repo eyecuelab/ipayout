@@ -45,45 +45,46 @@ describe EyecueIpayout do
     end
   end
 
-  # it 'should register a new user' do
-  #   options_hash = {}
-  #   options_hash[:fn] = 'eWallet_RegisterUser'
-  #   options_hash[:endpoint] = EyecueIpayout.configuration.endpoint
-  #   options_hash[:MerchantGUID] = EyecueIpayout.configuration.merchant_guid
-  #   options_hash[:MerchantPassword] = EyecueIpayout.configuration.merchant_password
-  #   options_hash[:UserName] = 'eyecueTestUser'
-  #   options_hash[:FirstName] = 'Glen'
-  #   options_hash[:LastName] = 'Danzig'
-  #   options_hash[:CompanyName] = 'EyeCue Lab'
-  #   options_hash[:Address1] = '3934 NE M L King Blvd'
-  #   options_hash[:Address2] = ''
-  #   options_hash[:City] = 'Portland'
-  #   options_hash[:State] = 'OR'
-  #   options_hash[:ZipCode] = '97212'
-  #   options_hash[:Country2xFormat] = 'US'
-  #   options_hash[:PhoneNumber] = '5038415250'
-  #   options_hash[:CellPhoneNumber] = ''
-  #   options_hash[:EmailAddress] = 'hello@eyecuelab.com'
-  #   options_hash[:SSN] = ''
-  #   options_hash[:CompanyTaxID] = ''
-  #   options_hash[:GovernmentID] = ''
-  #   options_hash[:MilitaryID] = ''
-  #   options_hash[:PassportNumber] = ''
-  #   options_hash[:DriversLicense] = ''
-  #   options_hash[:DateOfBirth] = '10/17/1980'
-  #   options_hash[:WebsitePassword] = ''
-  #   options_hash[:DefaultCurrency] = 'USD'
-  #   options_hash[:SkipAutoSVCOrder] = ''
-  #   options_hash[:PreferredLanguage] = ''
-  #   options_hash[:IsBusinessUser] = ''
-  #   options_hash[:BusinessUserName] = ''
-  #   pp options_hash
-  #   response = @client.ewallet_request(options_hash)
-  #   print response
+  it 'should register a new user' do
+    email_address = 'register-test' + rand.to_s[2..6] + '@eyecuelab.com'
+    options_hash = {}
+    options_hash[:fn] = 'eWallet_RegisterUser'
+    options_hash[:endpoint] = EyecueIpayout.configuration.endpoint
+    options_hash[:MerchantGUID] = EyecueIpayout.configuration.merchant_guid
+    options_hash[:MerchantPassword] = EyecueIpayout.configuration.merchant_password
+    options_hash[:UserName] = email_address
+    options_hash[:FirstName] = 'Glen'
+    options_hash[:LastName] = 'Danzig'
+    options_hash[:CompanyName] = 'EyeCue Lab'
+    options_hash[:Address1] = '3934 NE M L King Blvd'
+    options_hash[:Address2] = ''
+    options_hash[:City] = 'Portland'
+    options_hash[:State] = 'OR'
+    options_hash[:ZipCode] = '97212'
+    options_hash[:Country2xFormat] = 'US'
+    options_hash[:PhoneNumber] = '5038415250'
+    options_hash[:CellPhoneNumber] = ''
+    options_hash[:EmailAddress] = email_address
+    options_hash[:SSN] = ''
+    options_hash[:CompanyTaxID] = ''
+    options_hash[:GovernmentID] = ''
+    options_hash[:MilitaryID] = ''
+    options_hash[:PassportNumber] = ''
+    options_hash[:DriversLicense] = ''
+    options_hash[:DateOfBirth] = '10/17/1980'
+    options_hash[:WebsitePassword] = ''
+    options_hash[:DefaultCurrency] = 'USD'
+    options_hash[:SkipAutoSVCOrder] = ''
+    options_hash[:PreferredLanguage] = ''
+    options_hash[:IsBusinessUser] = ''
+    options_hash[:BusinessUserName] = ''
+    pp options_hash
+    response = @client.ewallet_request(options_hash)
+    print response
 
-  #   expect(response['m_Text']).to eq('OK')
-  #   expect(response['UserName']).to eq('eyecueTestUser')
-  # end
+    expect(response['m_Text']).to eq('OK')
+    expect(response['UserName']).to eq('eyecueTestUser')
+  end
 
   it 'should fetch registered users account status' do
     options_hash = {}
