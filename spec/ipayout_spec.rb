@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'byebug'
 require 'securerandom'
 
 describe EyecueIpayout do
@@ -45,8 +44,9 @@ describe EyecueIpayout do
     end
   end
 
+  email_address = 'register-test' + rand.to_s[2..6] + '@eyecuelab.com'
   it 'should register a new user' do
-    email_address = 'register-test' + rand.to_s[2..6] + '@eyecuelab.com'
+
     options_hash = {}
     options_hash[:fn] = 'eWallet_RegisterUser'
     options_hash[:endpoint] = EyecueIpayout.configuration.endpoint
@@ -80,10 +80,8 @@ describe EyecueIpayout do
     options_hash[:BusinessUserName] = ''
     pp options_hash
     response = @client.ewallet_request(options_hash)
-    print response
 
     expect(response['m_Text']).to eq('OK')
-    expect(response['UserName']).to eq('eyecueTestUser')
   end
 
   it 'should fetch registered users account status' do
@@ -92,7 +90,7 @@ describe EyecueIpayout do
     options_hash[:endpoint] = EyecueIpayout.configuration.endpoint
     options_hash[:MerchantGUID] = EyecueIpayout.configuration.merchant_guid
     options_hash[:MerchantPassword] = EyecueIpayout.configuration.merchant_password
-    options_hash[:UserName] = 'eyecueTest20'
+    options_hash[:UserName] = email_address
     response = @client.ewallet_request(options_hash)
     print response
     expect(response['m_Text']).to eq('OK')
@@ -105,7 +103,7 @@ describe EyecueIpayout do
     options_hash[:endpoint] = EyecueIpayout.configuration.endpoint
     options_hash[:MerchantGUID] = EyecueIpayout.configuration.merchant_guid
     options_hash[:MerchantPassword] = EyecueIpayout.configuration.merchant_password
-    options_hash[:UserName] = 'eyecueTestUser'
+    options_hash[:UserName] = email_address
     response = @client.ewallet_request(options_hash)
     expect(response['m_Text']).to eq('OK')
     expect(response['UserName']).to eq('eyecueTestUser')
@@ -125,7 +123,7 @@ describe EyecueIpayout do
     options_hash[:MerchantPassword] = EyecueIpayout.configuration.merchant_password
     options_hash[:PartnerBatchID]   = DateTime.now.to_s
     options_hash[:PoolID]           = ''
-    options_hash[:arrAccounts]      = [{ UserName: 'eyecueTestuser',
+    options_hash[:arrAccounts]      = [{ UserName: email_address,
                                          Amount:   1.00,
                                          Comments: 'Test Test Test',
                                          MerchantReferenceID:
@@ -145,7 +143,7 @@ describe EyecueIpayout do
     options_hash[:endpoint] = EyecueIpayout.configuration.endpoint
     options_hash[:MerchantGUID] = EyecueIpayout.configuration.merchant_guid
     options_hash[:MerchantPassword] = EyecueIpayout.configuration.merchant_password
-    options_hash[:UserName] = 'eyecueTestUser'
+    options_hash[:UserName] = email_address
     options_hash[:CurrencyCode] = 'USD'
     response = @client.ewallet_request(options_hash)
     print response
