@@ -1,4 +1,4 @@
-  # EyecueIpayout
+  # Ipayout
 
 This gem serves as a wrapper for the iPayout eWallet Web Service.
 
@@ -12,7 +12,7 @@ https://www.i-payout.com/API/default.aspx
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'eyecue_ipayout'
+gem 'ipayout'
 ```
 
 And then execute:
@@ -24,7 +24,7 @@ $ bundle
 Or install it yourself as:
 
 ```bash
-$ gem install eyecue_ipayout
+$ gem install ipayout
 ```
 
 ## Configuration
@@ -35,9 +35,9 @@ them based on the Rails environment that is
 running (eg. production, development...)
 
     #this example is set to use their testing sandbox
-    EyecueIpayout.endpoint = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
-    EyecueIpayout.merchant_guid = <YOUR MERCHANT GUID>
-    EyecueIpayout.merchant_password = <YOUR MERCHANT PASSWORD>
+    Ipayout.endpoint = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
+    Ipayout.merchant_guid = <YOUR MERCHANT GUID>
+    Ipayout.merchant_password = <YOUR MERCHANT PASSWORD>
 
 ## Development
 
@@ -49,18 +49,18 @@ certainly warrant a rebuild.
 If the gem is already there, remove it:
 
 	```ruby
-	rm eyecue_ipayout-0.0.1.gem
+	rm ipayout-0.0.1.gem
 	```
 
 Build the gem from your project root:
 
 	```ruby
-	gem build eyecue_ipayout.gemspec
+	gem build ipayout.gemspec
 	```
 Install the gem using it's local path:
 
 	```ruby
-	gem install --local eyecue_ipayout-0.0.1.gem
+	gem install --local ipayout-0.0.1.gem
 	```
 
 ## Usage
@@ -70,10 +70,10 @@ Here's how you can use this gem to interact with the iPayout eWallet API.
 This gem targets the main service that accepts and returns JSON. iPayout provides endpoints that accept and return different formats (like XML).  However, the JSON endpoint represents is their most recent service an
 
 ### Initialization
-In your Rails 4.1 project, create an initializer called eyecue_ipayout.rb in config/inititalizers.  You can pass your project's credentials through EyecueIpayout.configuration like so:
+In your Rails 4.1 project, create an initializer called ipayout.rb in config/inititalizers.  You can pass your project's credentials through Ipayout.configuration like so:
 
 ```ruby
-EyecueIpayout.configuration do |config|
+Ipayout.configuration do |config|
   config.endpoint =
     Rails.application.secrets.ipayout_api_endpoint
   config.merchant_guid =
@@ -88,14 +88,14 @@ end
 The Client is the higher-level object that speaks to the iPayout eWallet API. It also provides the Service objects.
 
 ```ruby
-  require 'eyecue_ipayout'
+  require 'ipayout'
 
-  client = EyecueIpayout.new
+  client = Ipayout.new
   options_hash = {}
   options_hash[:fn] = 'eWallet_GetCustomerDetails'
-  options_hash[:endpoint] = EyecueIpayout.configuration.endpoint
-  options_hash[:MerchantGUID] = EyecueIpayout.configuration.merchant_guid
-  options_hash[:MerchantPassword] = EyecueIpayout.configuration.merchant_password
+  options_hash[:endpoint] = Ipayout.configuration.endpoint
+  options_hash[:MerchantGUID] = Ipayout.configuration.merchant_guid
+  options_hash[:MerchantPassword] = Ipayout.configuration.merchant_password
   options_hash[:UserName] = 'Glen Danzig'
 
   service_name = "get_customer_details"
@@ -106,9 +106,9 @@ The Client is the higher-level object that speaks to the iPayout eWallet API. It
 The Service object is instantiated to handle specific calls to the iPayout API.  We can tell the service object what endpoint to hit, and which parameters to send with that request.  What's more, the service object can also return all the parameters that a service will accept.
 
 ```ruby
-  require 'eyecue_ipayout'
+  require 'ipayout'
 
-  client = EyecueIpayout.new
+  client = Ipayout.new
   service_name = "eWallet_GetCustomerDetails"
   service = client.get_service(service_name)
 

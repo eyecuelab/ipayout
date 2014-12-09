@@ -1,44 +1,44 @@
 require 'spec_helper'
 require 'securerandom'
 
-describe EyecueIpayout do
-  subject { EyecueIpayout.new }
+describe Ipayout do
+  subject { Ipayout.new }
   before do
-    @client = EyecueIpayout.new
+    @client = Ipayout.new
   end
 
   it 'should have a version' do
-    expect(EyecueIpayout::VERSION).to_not be_nil
+    expect(Ipayout::VERSION).to_not be_nil
   end
 
   describe '#configure' do
     before do
-      EyecueIpayout.configure do |config|
+      Ipayout.configure do |config|
         config.endpoint = 'https://testewallet.com/xxxxxx/ws_JsonAdapter.aspx'
-        config.merchant_password = "elS0l"
-        config.merchant_guid = "1212112121212121"
+        config.merchant_password = 'elS0l'
+        config.merchant_guid = '1212112121212121'
       end
     end
 
     it 'returns the values set by configuration' do
-      config = EyecueIpayout.configuration
+      config = Ipayout.configuration
       expect(config.endpoint).to eq('https://testewallet.com/xxxxxx/ws_JsonAdapter.aspx')
       expect(config.merchant_password).to eq('elS0l')
-      expect(config.merchant_guid).to eq("1212112121212121")
+      expect(config.merchant_guid).to eq('1212112121212121')
     end
   end
 
   describe '.reset' do
     before :each do
-      EyecueIpayout.configure do |config|
+      Ipayout.configure do |config|
         config.endpoint = 'https://testewallet.com/000000000/ws_JsonAdapter.aspx'
       end
     end
 
     it 'resets the configuration' do
-      EyecueIpayout.reset
+      Ipayout.reset
 
-      config = EyecueIpayout.configuration
+      config = Ipayout.configuration
 
       expect(config.endpoint).to be_nil
     end
@@ -49,9 +49,10 @@ describe EyecueIpayout do
 
     options_hash = {}
     options_hash[:fn] = 'eWallet_RegisterUser'
-    options_hash[:endpoint] = EyecueIpayout.configuration.endpoint
-    options_hash[:MerchantGUID] = EyecueIpayout.configuration.merchant_guid
-    options_hash[:MerchantPassword] = EyecueIpayout.configuration.merchant_password
+    options_hash[:endpoint] = Ipayout.configuration.endpoint
+    options_hash[:MerchantGUID] = Ipayout.configuration.merchant_guid
+    options_hash[:MerchantPassword] =
+      Ipayout.configuration.merchant_password
     options_hash[:UserName] = email_address
     options_hash[:FirstName] = 'Glen'
     options_hash[:LastName] = 'Danzig'
@@ -87,9 +88,10 @@ describe EyecueIpayout do
   it 'should fetch registered users account status' do
     options_hash = {}
     options_hash[:fn] = 'eWallet_GetUserAccountStatus'
-    options_hash[:endpoint] = EyecueIpayout.configuration.endpoint
-    options_hash[:MerchantGUID] = EyecueIpayout.configuration.merchant_guid
-    options_hash[:MerchantPassword] = EyecueIpayout.configuration.merchant_password
+    options_hash[:endpoint] = Ipayout.configuration.endpoint
+    options_hash[:MerchantGUID] = Ipayout.configuration.merchant_guid
+    options_hash[:MerchantPassword] =
+      Ipayout.configuration.merchant_password
     options_hash[:UserName] = email_address
     response = @client.ewallet_request(options_hash)
     print response
@@ -100,9 +102,10 @@ describe EyecueIpayout do
   it 'should fetch registered user\'s account details' do
     options_hash = {}
     options_hash[:fn] = 'eWallet_GetCustomerDetails'
-    options_hash[:endpoint] = EyecueIpayout.configuration.endpoint
-    options_hash[:MerchantGUID] = EyecueIpayout.configuration.merchant_guid
-    options_hash[:MerchantPassword] = EyecueIpayout.configuration.merchant_password
+    options_hash[:endpoint] = Ipayout.configuration.endpoint
+    options_hash[:MerchantGUID] = Ipayout.configuration.merchant_guid
+    options_hash[:MerchantPassword] =
+     Ipayout.configuration.merchant_password
     options_hash[:UserName] = email_address
     response = @client.ewallet_request(options_hash)
     expect(response['m_Text']).to eq('OK')
@@ -118,9 +121,10 @@ describe EyecueIpayout do
 
     options_hash = {}
     options_hash[:fn]               = 'eWallet_Load'
-    options_hash[:endpoint]         = EyecueIpayout.configuration.endpoint
-    options_hash[:MerchantGUID]     = EyecueIpayout.configuration.merchant_guid
-    options_hash[:MerchantPassword] = EyecueIpayout.configuration.merchant_password
+    options_hash[:endpoint]         = Ipayout.configuration.endpoint
+    options_hash[:MerchantGUID]     = Ipayout.configuration.merchant_guid
+    options_hash[:MerchantPassword] =
+     Ipayout.configuration.merchant_password
     options_hash[:PartnerBatchID]   = DateTime.now.to_s
     options_hash[:PoolID]           = ''
     options_hash[:arrAccounts]      = [{ UserName: email_address,
@@ -140,9 +144,10 @@ describe EyecueIpayout do
   it 'should fetch registered user\'s account balance' do
     options_hash = {}
     options_hash[:fn] = 'eWallet_GetCurrencyBalance'
-    options_hash[:endpoint] = EyecueIpayout.configuration.endpoint
-    options_hash[:MerchantGUID] = EyecueIpayout.configuration.merchant_guid
-    options_hash[:MerchantPassword] = EyecueIpayout.configuration.merchant_password
+    options_hash[:endpoint] = Ipayout.configuration.endpoint
+    options_hash[:MerchantGUID] = Ipayout.configuration.merchant_guid
+    options_hash[:MerchantPassword] =
+      Ipayout.configuration.merchant_password
     options_hash[:UserName] = email_address
     options_hash[:CurrencyCode] = 'USD'
     response = @client.ewallet_request(options_hash)

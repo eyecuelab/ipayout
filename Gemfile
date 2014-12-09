@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in eyecue_ipayout.gemspec
+# Specify your gem's dependencies in ipayout.gemspec
 gemspec
