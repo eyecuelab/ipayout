@@ -5,6 +5,7 @@ require 'ipayout/error/forbidden'
 require 'ipayout/error/not_acceptable'
 require 'ipayout/error/not_found'
 require 'ipayout/error/unauthorized'
+require 'pry'
 
 module Ipayout
   module Response
@@ -30,9 +31,6 @@ module Ipayout
                                             env[:response_headers])
         when 406
           fail Ipayout::Error::NotAcceptable.new(error_message(env),
-                                                 env[:response_headers])
-        else
-          fail Ipayout::Error::NotAcceptable.new(error_message('Unknown Error'),
                                                  env[:response_headers])
         end
       end
