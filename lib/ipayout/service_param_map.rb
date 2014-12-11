@@ -64,6 +64,7 @@ module Ipayout
                                                 ProcessorTransactionRefNumbe
                                                 CustomerFeeAmount
                                                 CurrencyCode)
+      service
     end
 
     #  eWallet_GetCustomerDetails Service Map
@@ -83,6 +84,7 @@ module Ipayout
                       IsBusiness IsInvalidEmail PreferredLanguage
                       SVCShippingAddress)
       service.response_parameters = res_params
+      service
     end
 
     #  eWallet_GetUserAccountStatus Service
@@ -94,6 +96,7 @@ module Ipayout
       service.add_param('MerchantPassword','String', true)
       service.add_param('UserName', 'String', true)
       service.response_parameters = %w(m_Code m_Text)
+      service
     end
 
     #  eWallet_RequestUserAutoLogin Service
@@ -105,6 +108,7 @@ module Ipayout
       service.add_param('MerchantPassword', 'String', true)
       service.add_param('UserName', 'String', true)
       service.response_parameters = %w(m_Code m_Text m_ProcessorTransactionRefNumber)
+      service
     end
 
     #  eWallet_Load Service
@@ -122,6 +126,7 @@ module Ipayout
       service.add_param('AutoLoad', 'Boolean', true)
       service.add_param('CurrencyCode', 'Boolean', true)
       service.response_parameters = %w(m_Code m_Text)
+      service
     end
 
     def build_service_map
