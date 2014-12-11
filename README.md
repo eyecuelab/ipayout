@@ -12,7 +12,7 @@ https://www.i-payout.com/API/default.aspx
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'ipayout'
+gem 'ipayout', :git => 'https://github.com/eyecuelab/ipayout.git'
 ```
 
 And then execute:
@@ -25,6 +25,7 @@ Or install it yourself as:
 
 ```bash
 $ gem install ipayout
+
 ```
 
 ## Configuration
