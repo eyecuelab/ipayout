@@ -1,6 +1,5 @@
 require 'securerandom'
 require 'ipayout'
-require 'pry'
 require 'spec_helper'
 
 describe Ipayout do
@@ -47,89 +46,99 @@ describe Ipayout do
     end
   end
 
-  describe 'requests' do
-    context 'Use registered account for other services (same email)' do
-      let(:user_email) { 'register-test' + rand.to_s[2..6] + '@eyecuelab.com' }
+  describe '#ewallet_request' do
+    let(:base_params) do
+      {
+        endpoint: Ipayout.configuration.endpoint,
+        MerchantGUID: Ipayout.configuration.merchant_guid,
+        MerchantPassword: Ipayout.configuration.merchant_password
+      }
+    end
+
+    before(:all) do
+      @user_email = 'register-test' + rand.to_s[2..6] + '@eyecuelab.com'
+    end
+
+    before do
+      @response = @client.ewallet_request(options_hash)
+    end
+
+    context 'register user' do
+      let(:options_hash) do
+        base_params.merge(
+                            fn: 'eWallet_RegisterUser',
+                            UserName: @user_email,
+                            FirstName: 'Glen',
+                            LastName: 'Danzig',
+                            CompanyName: 'EyeCue Lab',
+                            Address1:  '3934 NE M L King Blvd',
+                            Address2: '',
+                            City: 'Portland',
+                            State: 'OR',
+                            ZipCode: '97212',
+                            Country2xFormat: 'US',
+                            PhoneNumber: '5038415250',
+                            CellPhoneNumber: '',
+                            EmailAddress: @user_email,
+                            SSN: '',
+                            CompanyTaxID: '',
+                            GovernmentID: '',
+                            MilitaryID: '',
+                            PassportNumber: '',
+                            DriversLicense: '',
+                            DateOfBirth: '10/17/1980',
+                            WebsitePassword: '',
+                            DefaultCurrency: 'USD',
+                            SkipAutoSVCOrder: '',
+                            PreferredLanguage: '',
+                            IsBusinessUser: '',
+                            BusinessUserName: ''
+                          )
+      end
+
       it 'should register a new user' do
-        base_params = {}
-        base_params[:endpoint] = Ipayout.configuration.endpoint
-        base_params[:MerchantGUID] = Ipayout.configuration.merchant_guid
-        base_params[:MerchantPassword] =
-          Ipayout.configuration.merchant_password
+        # response = @client.ewallet_request(options_hash)
+        expect(@response['m_Text']).to eq('OK')
+      end
+    end
 
-        options_hash = base_params
-        options_hash[:fn] = 'eWallet_RegisterUser'
-        options_hash[:UserName] = user_email
-        options_hash[:FirstName] = 'Glen'
-        options_hash[:LastName] = 'Danzig'
-        options_hash[:CompanyName] = 'EyeCue Lab'
-        options_hash[:Address1] =  '3934 NE M L King Blvd'
-        options_hash[:Address2] = ''
-        options_hash[:City] = 'Portland'
-        options_hash[:State] = 'OR'
-        options_hash[:ZipCode] = '97212'
-        options_hash[:Country2xFormat] = 'US'
-        options_hash[:PhoneNumber] = '5038415250'
-        options_hash[:CellPhoneNumber] = ''
-        options_hash[:EmailAddress] = user_email
-        options_hash[:SSN] = ''
-        options_hash[:CompanyTaxID] = ''
-        options_hash[:GovernmentID] = ''
-        options_hash[:MilitaryID] = ''
-        options_hash[:PassportNumber] = ''
-        options_hash[:DriversLicense] = ''
-        options_hash[:DateOfBirth] = '10/17/1980'
-        options_hash[:WebsitePassword] = ''
-        options_hash[:DefaultCurrency] = 'USD'
-        options_hash[:SkipAutoSVCOrder] = ''
-        options_hash[:PreferredLanguage] = ''
-        options_hash[:IsBusinessUser] = ''
-        options_hash[:BusinessUserName] = ''
+    context 'account status' do
+      let(:options_hash) do
+        base_params.merge(
+                            fn: 'eWallet_GetUserAccountStatus',
+                            UserName: @user_email
+                          )
+      end
 
-        response = @client.ewallet_request(options_hash)
-        expect(response['m_Text']).to eq('OK')
+      it 'fetches account status' do
+        # test account status
+        # response = @client.ewallet_request(options_hash)
+        expect(@response['m_Text']).to eq('OK')
+        expect(@response).to include('AccStatus')
+      end
+    end
 
-        # We are packing all the tests in to this one 'it' because they
-        # depend on the information that results from registering
-        # a user.
+    context 'disbursement' do
+      let(:options_hash) do
+        base_params.merge(
+                            fn: 'eWallet_Load',
+                            PartnerBatchID: DateTime.now.to_s,
+                            PoolID: '',
+                            arrAccounts: [
+                              UserName: @user_email,
+                              Amount: 53.00,
+                              Comments: 'Test Test Test',
+                              MerchantReferenceID: '142014W'
+                            ],
+                            AllowDuplicates: true,
+                            AutoLoad: true,
+                            CurrencyCode: 'USD'
+                          )
+      end
 
-        #test account status
-        options_hash = base_params
-        options_hash[:fn] = 'eWallet_GetUserAccountStatus'
-        options_hash[:UserName] = user_email
-        response = @client.ewallet_request(options_hash)
-        expect(response['m_Text']).to eq('OK')
-        expect(response).to include('AccStatus')
-
-        #test disbursement
-        transaction_hex = SecureRandom.hex(16)
-        transaction_hex.insert(-27, '-')
-        transaction_hex.insert(-22, '-')
-        transaction_hex.insert(-17, '-')
-        transaction_hex.insert(-12, '-')
-
-        options_hash = base_params
-        options_hash[:fn]               = 'eWallet_Load'
-        options_hash[:PartnerBatchID]   = DateTime.now.to_s
-        options_hash[:PoolID]           = ''
-        options_hash[:arrAccounts]      = [{ UserName: user_email,
-                                             Amount:   1.00,
-                                             Comments: 'Test Test Test',
-                                             MerchantReferenceID:
-                                             transaction_hex }]
-        options_hash[:AllowDuplicates]  = true
-        options_hash[:AutoLoad]         = true
-        options_hash[:CurrencyCode]     = 'USD'
-        response = @client.ewallet_request(options_hash)
-        expect(response['m_Text']).to eq('OK')
-        expect(response).to include('TransactionRefID')
-        options_hash = base_params
-        options_hash[:fn] = 'eWallet_GetCurrencyBalance'
-        options_hash[:UserName] = user_email
-        options_hash[:CurrencyCode] = 'USD'
-        response = @client.ewallet_request(options_hash)
-        expect(response['m_Text']).to eq('OK')
-        expect(response).to include('CurrencyCode')
+      it 'successfully disburses funds' do
+        expect(@response['m_Text']).to eq('OK')
+        expect(@response).to include('TransactionRefID')
       end
     end
   end
