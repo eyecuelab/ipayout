@@ -22,58 +22,58 @@ module Ipayout
       @ewallet_services[service_name] if @ewallet_services.key? service_name
     end
 
-    # rubocop:disable MethodComplexity, MethodLength
-    def build_service_map
-      #  eWallet_RegisterUser Service Map
-      register_user_service = Ipayout::Service.new('register_user')
-      register_user_service.add_param('fn', 'String', true)
-      register_user_service.add_param('endpoint', 'String', true)
-      register_user_service.add_param('MerchantGUID', 'String', true)
-      register_user_service.add_param('MerchantPassword', 'String', true)
-      register_user_service.add_param('UserName', 'String', true)
-      register_user_service.add_param('FirstName', 'String', true)
-      register_user_service.add_param('FirstName', 'String', true)
-      register_user_service.add_param('LastName', 'String', true)
-      register_user_service.add_param('CompanyName', 'String', true)
-      register_user_service.add_param('Address1', 'String', true)
-      register_user_service.add_param('Address2', 'String', true)
-      register_user_service.add_param('City', 'String', true)
-      register_user_service.add_param('State', 'String', true)
-      register_user_service.add_param('ZipCode', 'String', true)
-      register_user_service.add_param('Country2xFormat', 'String', true)
-      register_user_service.add_param('PhoneNumber', 'String', true)
-      register_user_service.add_param('CellPhoneNumber', 'String', false)
-      register_user_service.add_param('EmailAddress', 'String', true)
-      register_user_service.add_param('SSN', 'String', false)
-      register_user_service.add_param('CompanyTaxID', 'String', false)
-      register_user_service.add_param('GovernmentID', 'String', false)
-      register_user_service.add_param('MilitaryID', 'String', false)
-      register_user_service.add_param('PassportNumber', 'String', false)
-      register_user_service.add_param('DriversLicense', 'String', false)
-      register_user_service.add_param('DateOfBirth', 'String', true)
-      register_user_service.add_param('WebsitePassword', 'String', true)
-      register_user_service.add_param('DefaultCurrency', 'String', true)
-      register_user_service.add_param('SkipAutoSVCOrder', 'String', false)
-      register_user_service.add_param('PreferredLanguage', 'String', false)
-      register_user_service.add_param('IsBusinessUser', 'String', false)
-      register_user_service.add_param('BusinessUserName', 'String', false)
+    #  eWallet_RegisterUser Service Map
+    def build_register_service
+      service = Ipayout::Service.new('register_user')
+      service.add_param('fn', 'String', true)
+      service.add_param('endpoint', 'String', true)
+      service.add_param('MerchantGUID', 'String', true)
+      service.add_param('MerchantPassword', 'String', true)
+      service.add_param('UserName', 'String', true)
+      service.add_param('FirstName', 'String', true)
+      service.add_param('FirstName', 'String', true)
+      service.add_param('LastName', 'String', true)
+      service.add_param('CompanyName', 'String', true)
+      service.add_param('Address1', 'String', true)
+      service.add_param('Address2', 'String', true)
+      service.add_param('City', 'String', true)
+      service.add_param('State', 'String', true)
+      service.add_param('ZipCode', 'String', true)
+      service.add_param('Country2xFormat', 'String', true)
+      service.add_param('PhoneNumber', 'String', true)
+      service.add_param('CellPhoneNumber', 'String', false)
+      service.add_param('EmailAddress', 'String', true)
+      service.add_param('SSN', 'String', false)
+      service.add_param('CompanyTaxID', 'String', false)
+      service.add_param('GovernmentID', 'String', false)
+      service.add_param('MilitaryID', 'String', false)
+      service.add_param('PassportNumber', 'String', false)
+      service.add_param('DriversLicense', 'String', false)
+      service.add_param('DateOfBirth', 'String', true)
+      service.add_param('WebsitePassword', 'String', true)
+      service.add_param('DefaultCurrency', 'String', true)
+      service.add_param('SkipAutoSVCOrder', 'String', false)
+      service.add_param('PreferredLanguage', 'String', false)
+      service.add_param('IsBusinessUser', 'String', false)
+      service.add_param('BusinessUserName', 'String', false)
 
-      register_user_service.response_parameters = %w(m_Code m_Text
-                                                     LogTransactionID
-                                                     TransactionRefID
-                                                     ACHTransactionID
-                                                     ProcessorTransactionRefNumbe
-                                                     CustomerFeeAmount
-                                                     CurrencyCode)
+      service.response_parameters = %w(m_Code m_Text
+                                                LogTransactionID
+                                                TransactionRefID
+                                                ACHTransactionID
+                                                ProcessorTransactionRefNumbe
+                                                CustomerFeeAmount
+                                                CurrencyCode)
+    end
 
-      #  eWallet_GetCustomerDetails Service Map
-      get_customer_details_service =
-        Ipayout::Service.new('get_customer_details')
-      get_customer_details_service.add_param('fn', 'String', true)
-      get_customer_details_service.add_param('endpoint', 'String', true)
-      get_customer_details_service.add_param('MerchantGUID', 'String', true)
-      get_customer_details_service.add_param('MerchantPassword', 'String', true)
-      get_customer_details_service.add_param('UserName', 'String', true)
+    #  eWallet_GetCustomerDetails Service Map
+    def build_details_service
+      service = Ipayout::Service.new('get_customer_details')
+      service.add_param('fn', 'String', true)
+      service.add_param('endpoint', 'String', true)
+      service.add_param('MerchantGUID', 'String', true)
+      service.add_param('MerchantPassword', 'String', true)
+      service.add_param('UserName', 'String', true)
 
       res_params = %w(UserName CustomerGuid IsActivated Email FirstName LastName
                       CompanyName Phone CellPhoneNumber
@@ -82,52 +82,61 @@ module Ipayout
                       IsInfoVerified IsClosed CreatedDate IsAgreedToFees
                       IsBusiness IsInvalidEmail PreferredLanguage
                       SVCShippingAddress)
-      get_customer_details_service.response_parameters = res_params
+      service.response_parameters = res_params
+    end
 
-      #  eWallet_GetUserAccountStatus Service
-      get_user_account_status_service =
-        Ipayout::Service.new('get_user_account_status')
-      get_user_account_status_service.add_param('fn', 'String', true)
-      get_user_account_status_service.add_param('endpoint', 'String', true)
-      get_user_account_status_service.add_param('MerchantGUID', 'String', true)
-      get_user_account_status_service.add_param('MerchantPassword',
-                                                'String', true)
-      get_user_account_status_service.add_param('UserName', 'String', true)
-      get_user_account_status_service.response_parameters = %w(m_Code m_Text)
-      #  eWallet_RequestUserAutoLogin Service
-      request_user_auto_login_service =
-        Ipayout::Service.new('request_user_auto_login')
-      request_user_auto_login_service.add_param('fn', 'String', true)
-      request_user_auto_login_service.add_param('endpoint', 'String', true)
-      request_user_auto_login_service.add_param('MerchantGUID', 'String', true)
-      request_user_auto_login_service.add_param('MerchantPassword',
-                                                'String', true)
-      request_user_auto_login_service.add_param('UserName', 'String', true)
-      request_user_auto_login_service.response_parameters =
-        %w(m_Code m_Text m_ProcessorTransactionRefNumber)
+    #  eWallet_GetUserAccountStatus Service
+    def build_account_service
+      service = Ipayout::Service.new('get_user_account_status')
+      service.add_param('fn', 'String', true)
+      service.add_param('endpoint', 'String', true)
+      service.add_param('MerchantGUID', 'String', true)
+      service.add_param('MerchantPassword','String', true)
+      service.add_param('UserName', 'String', true)
+      service.response_parameters = %w(m_Code m_Text)
+    end
 
-      #  eWallet_G_serviceetUserAccountStatus Service
-      ewallet_load_service = Ipayout::Service.new('ewallet_load')
-      ewallet_load_service.add_param('fn', 'String', true)
-      ewallet_load_service.add_param('endpoint', 'String', true)
-      ewallet_load_service.add_param('MerchantGUID', 'String', true)
-      ewallet_load_service.add_param('MerchantPassword', 'String', true)
-      ewallet_load_service.add_param('PartnerBatchID', 'String', true)
-      ewallet_load_service.add_param('PoolID', 'String', true)
-      ewallet_load_service.add_param('MerchantPassword', 'String', true)
-      ewallet_load_service.add_param('arrAccounts', 'String', true)
-      ewallet_load_service.add_param('AllowDuplicates', 'String', true)
-      ewallet_load_service.add_param('AutoLoad', 'Boolean', true)
-      ewallet_load_service.add_param('CurrencyCode', 'Boolean', true)
-      ewallet_load_service.response_parameters = %w(m_Code m_Text)
+    #  eWallet_RequestUserAutoLogin Service
+    def build_login_service
+      service = Ipayout::Service.new('request_user_auto_login')
+      service.add_param('fn', 'String', true)
+      service.add_param('endpoint', 'String', true)
+      service.add_param('MerchantGUID', 'String', true)
+      service.add_param('MerchantPassword', 'String', true)
+      service.add_param('UserName', 'String', true)
+      service.response_parameters = %w(m_Code m_Text m_ProcessorTransactionRefNumber)
+    end
 
-      @ewallet_services['register_user'] = register_user_service
-      @ewallet_services['get_customer_details'] = get_customer_details_service
-      @ewallet_services['get_user_account_status'] =
-        get_user_account_status_service
-      @ewallet_services['ewallet_load'] = ewallet_load_service
-      @ewallet_services['request_user_auto_login'] =
-        request_user_auto_login_service
+    #  eWallet_Load Service
+    def build_load_service
+      service = Ipayout::Service.new('ewallet_load')
+      service.add_param('fn', 'String', true)
+      service.add_param('endpoint', 'String', true)
+      service.add_param('MerchantGUID', 'String', true)
+      service.add_param('MerchantPassword', 'String', true)
+      service.add_param('PartnerBatchID', 'String', true)
+      service.add_param('PoolID', 'String', true)
+      service.add_param('MerchantPassword', 'String', true)
+      service.add_param('arrAccounts', 'String', true)
+      service.add_param('AllowDuplicates', 'String', true)
+      service.add_param('AutoLoad', 'Boolean', true)
+      service.add_param('CurrencyCode', 'Boolean', true)
+      service.response_parameters = %w(m_Code m_Text)
+    end
+
+    def build_service_map
+      # register_service = build_register_service
+      # details_service = build_details_service
+      # account_service = build_account_service
+      # login_service = build_login_service
+      # load_service = build_load_service
+      @ewallet_services = {
+        register_user:            build_register_service,
+        get_customer_details:     build_details_service,
+        get_user_account_status:  build_account_service,
+        request_user_auto_login:  build_login_service,
+        ewallet_load:             build_load_service
+      }
     end
   end
 end

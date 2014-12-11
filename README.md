@@ -40,30 +40,6 @@ running (eg. production, development...)
     Ipayout.merchant_guid = <YOUR MERCHANT GUID>
     Ipayout.merchant_password = <YOUR MERCHANT PASSWORD>
 
-## Development
-
-If you are developing this gem on your local machine, here's a
-decent workflow that handles building and updating the gem. Some
-code changes don't necessarily need a rebuild.  Changes to the gemspec
-certainly warrant a rebuild.
-
-If the gem is already there, remove it:
-
-	```ruby
-	rm ipayout-0.0.1.gem
-	```
-
-Build the gem from your project root:
-
-	```ruby
-	gem build ipayout.gemspec
-	```
-Install the gem using it's local path:
-
-	```ruby
-	gem install --local ipayout-0.0.1.gem
-	```
-
 ## Usage
 
 Here's how you can use this gem to interact with the iPayout eWallet API.

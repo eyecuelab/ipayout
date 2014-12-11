@@ -6,8 +6,10 @@ describe Ipayout do
   subject { Ipayout.new }
   before do
     @client = Ipayout.new
-    Ipayout.configuration.endpoint = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
-    Ipayout.configuration.merchant_guid = 'a4739056-7db6-40f3-9618-f2bcccbf70cc'
+    Ipayout.configuration.endpoint =
+      'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
+    Ipayout.configuration.merchant_guid =
+      'a4739056-7db6-40f3-9618-f2bcccbf70cc'
     Ipayout.configuration.merchant_password = '9xXLvA66hi'
   end
 
@@ -18,7 +20,8 @@ describe Ipayout do
   describe '#configure' do
     before do
       Ipayout.configure do |config|
-        config.endpoint = 'https://testewallet.com/xxxxxx/ws_JsonAdapter.aspx'
+        config.endpoint =
+          'https://testewallet.com/xxxxxx/ws_JsonAdapter.aspx'
         config.merchant_password = 'elS0l'
         config.merchant_guid = '1212112121212121'
       end
@@ -26,7 +29,8 @@ describe Ipayout do
 
     it 'returns the values set by configuration' do
       config = Ipayout.configuration
-      expect(config.endpoint).to eq('https://testewallet.com/xxxxxx/ws_JsonAdapter.aspx')
+      expect(config.endpoint)
+        .to eq('https://testewallet.com/xxxxxx/ws_JsonAdapter.aspx')
       expect(config.merchant_password).to eq('elS0l')
       expect(config.merchant_guid).to eq('1212112121212121')
     end
@@ -35,7 +39,8 @@ describe Ipayout do
   describe '.reset' do
     before :each do
       Ipayout.configure do |config|
-        config.endpoint = 'https://testewallet.com/000000000/ws_JsonAdapter.aspx'
+        config.endpoint =
+          'https://testewallet.com/000000000/ws_JsonAdapter.aspx'
       end
     end
 
@@ -97,7 +102,6 @@ describe Ipayout do
       end
 
       it 'should register a new user' do
-        # response = @client.ewallet_request(options_hash)
         expect(@response['m_Text']).to eq('OK')
       end
     end
@@ -111,8 +115,6 @@ describe Ipayout do
       end
 
       it 'fetches account status' do
-        # test account status
-        # response = @client.ewallet_request(options_hash)
         expect(@response['m_Text']).to eq('OK')
         expect(@response).to include('AccStatus')
       end
@@ -120,19 +122,20 @@ describe Ipayout do
 
     context 'disbursement' do
       let(:options_hash) do
+        account1 = {
+          UserName:            @user_email,
+          Amount:              53.00,
+          Comments:            'Test Test Test',
+          MerchantReferenceID: '142014W'
+        }
         base_params.merge(
-                            fn: 'eWallet_Load',
-                            PartnerBatchID: DateTime.now.to_s,
-                            PoolID: '',
-                            arrAccounts: [
-                              UserName: @user_email,
-                              Amount: 53.00,
-                              Comments: 'Test Test Test',
-                              MerchantReferenceID: '142014W'
-                            ],
+                            fn:              'eWallet_Load',
+                            PartnerBatchID:  DateTime.now.to_s,
+                            PoolID:          '',
+                            arrAccounts:     [account1],
                             AllowDuplicates: true,
-                            AutoLoad: true,
-                            CurrencyCode: 'USD'
+                            AutoLoad:        true,
+                            CurrencyCode:    'USD'
                           )
       end
 
