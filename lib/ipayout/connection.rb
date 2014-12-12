@@ -26,7 +26,7 @@ module Ipayout
 
       Faraday.new(url: faraday_options['url']) do |faraday|
         faraday.request :url_encoded
-        faraday.response :logger
+        #faraday.response :logger
         faraday.adapter Faraday.default_adapter
         faraday.use Ipayout::Response::RaiseClientError
         faraday.use Ipayout::Response::RaiseServerError

@@ -6,8 +6,8 @@ require 'ipayout'
 RSpec.configure do |_config|
 
   Ipayout.configure do |config|
-    config.endpoint = 'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
-    config.merchant_guid = 'a4739056-7db6-40f3-9618-f2bcccbf70cc'
-    config.merchant_password = '9xXLvA66hi'
+    config.endpoint = Ipayout.configuration.endpoint
+    config.merchant_guid = Ipayout.configuration.merchant_guid
+    config.merchant_password = Ipayout.configuration.merchant_password
   end
 end
