@@ -23,8 +23,9 @@ module Ipayout
 
       faraday_options = connection_options.deep_merge(default_options)
       faraday_options['url'] = Ipayout.configuration.endpoint
+      faraday_options['proxy'] = Ipayout.configuration.proxy
 
-      Faraday.new(url: faraday_options['url']) do |faraday|
+      Faraday.new(url: faraday_options['url'], proxy: faraday_options['proxy']) do |faraday|
         faraday.request :url_encoded
         #faraday.response :logger
         faraday.adapter Faraday.default_adapter

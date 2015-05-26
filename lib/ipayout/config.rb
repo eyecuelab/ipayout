@@ -6,6 +6,7 @@ module Ipayout
       attr_accessor :merchant_guid
       attr_accessor :merchant_password
       attr_accessor :endpoint
+      attr_accessor :proxy
     end
 
     DEFAULT_ACCESS_TOKEN = nil
@@ -24,7 +25,7 @@ module Ipayout
     DEFAULT_GATEWAY = nil
 
     # The proxy server if none is set
-    DEFAULT_PROXY = ''
+    DEFAULT_PROXY = proxy
 
     # The value sent in the 'User-Agent' header if none is set
     DEFAULT_USER_AGENT = "Ipayout Ruby Gem #{Ipayout::VERSION}"
@@ -39,7 +40,6 @@ module Ipayout
       :access_token,
       :proxy,
       :user_agent,
-      :endpoint,
       :merchant_guid,
       :merchant_password
     ]
