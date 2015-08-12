@@ -3,9 +3,9 @@ require 'ipayout'
 require 'spec_helper'
 
 describe Ipayout do
-  subject { Ipayout.new }
+  let(:client) { Ipayout.new }
+
   before do
-    @client = Ipayout.new
     Ipayout.configuration.endpoint =
       'https://testewallet.com/eWalletWS/ws_JsonAdapter.aspx'
     Ipayout.configuration.merchant_guid =
@@ -64,11 +64,11 @@ describe Ipayout do
       @user_email = 'register-test' + rand.to_s[2..6] + '@eyecuelab.com'
     end
 
-    before do
-      @response = @client.ewallet_request(options_hash)
-    end
-
     context 'register user' do
+      before do
+        @response = client.ewallet_request(options_hash)
+      end
+
       let(:options_hash) do
         base_params.merge(
                             fn: 'eWallet_RegisterUser',
@@ -107,6 +107,10 @@ describe Ipayout do
     end
 
     context 'account status' do
+      before do
+        @response = client.ewallet_request(options_hash)
+      end
+
       let(:options_hash) do
         base_params.merge(
                             fn: 'eWallet_GetUserAccountStatus',
@@ -122,26 +126,49 @@ describe Ipayout do
 
     context 'disbursement' do
       let(:options_hash) do
-        account1 = {
-          UserName:            @user_email,
-          Amount:              53.00,
-          Comments:            'Test Test Test',
-          MerchantReferenceID: '142014W'
-        }
         base_params.merge(
-                            fn:              'eWallet_Load',
-                            PartnerBatchID:  DateTime.now.to_s,
-                            PoolID:          '',
-                            arrAccounts:     [account1],
-                            AllowDuplicates: true,
-                            AutoLoad:        true,
-                            CurrencyCode:    'USD'
-                          )
+          fn:              'eWallet_Load',
+          PartnerBatchID:  DateTime.now.to_s,
+          PoolID:          '',
+          arrAccounts:     [account1],
+          AllowDuplicates: true,
+          AutoLoad:        true,
+          CurrencyCode:    'USD'
+        )
       end
 
-      it 'successfully disburses funds' do
-        expect(@response['m_Text']).to eq('OK')
-        expect(@response).to include('TransactionRefID')
+      context 'when ewallet exists' do
+        before do
+          @response = client.ewallet_request(options_hash)
+        end
+
+        let(:account1) do
+          { UserName:            @user_email,
+            Amount:              53.00,
+            Comments:            'Test Test Test',
+            MerchantReferenceID: '142014W' }
+        end
+
+        it 'successfully disburses funds' do
+          expect(@response['m_Text']).to eq('OK')
+          expect(@response).to include('TransactionRefID')
+        end
+      end
+
+      context 'ewallet does not exist' do
+        let(:account1) do
+          { UserName:            'fakeusername',
+            Amount:              53.00,
+            Comments:            'Test Test Test',
+            MerchantReferenceID: '142014W' }
+        end
+
+        it 'successfully disburses funds' do
+          expect { client.ewallet_request(options_hash) }
+            .to raise_error(
+              Ipayout::Error::EwalletNotFound,
+              'Customer with user name fakeusername is not found')
+        end
       end
     end
   end

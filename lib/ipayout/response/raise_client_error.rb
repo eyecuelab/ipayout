@@ -5,6 +5,7 @@ require 'ipayout/error/forbidden'
 require 'ipayout/error/not_acceptable'
 require 'ipayout/error/not_found'
 require 'ipayout/error/unauthorized'
+require 'ipayout/error/ewallet_not_found'
 require 'pry'
 
 module Ipayout
@@ -12,6 +13,8 @@ module Ipayout
     class RaiseClientError < Faraday::Response::Middleware
       def on_complete(env)
         case env[:status].to_i
+        when 200
+          process_success_response(env)
         when 400
           fail Ipayout::Error::BadRequest.new(error_message(env),
                                               env[:response_headers])
@@ -55,6 +58,17 @@ module Ipayout
           else
             ": #{first.chomp}"
           end
+        end
+      end
+
+      def process_success_response(env)
+        body_response = env[:body][:response]
+        return unless body_response
+        case body_response[:m_Code]
+        when -2
+          fail(Ipayout::Error::EwalletNotFound.new(
+                 body_response[:m_Text],
+                 env[:response_headers]))
         end
       end
     end
