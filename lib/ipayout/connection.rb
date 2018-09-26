@@ -28,11 +28,11 @@ module Ipayout
       Faraday.new(url: faraday_options['url'], proxy: faraday_options['proxy']) do |faraday|
         faraday.request :url_encoded
         #faraday.response :logger
-        faraday.adapter Faraday.default_adapter
         faraday.use Ipayout::Response::RaiseClientError
         faraday.use Ipayout::Response::RaiseServerError
         faraday.use Faraday::Response::Mashify
         faraday.use Faraday::Response::ParseJson
+        faraday.adapter Faraday.default_adapter
       end
     end
   end
