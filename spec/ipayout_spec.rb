@@ -1,6 +1,7 @@
 require 'securerandom'
 require 'ipayout'
 require 'spec_helper'
+require 'date'
 
 describe Ipayout do
   let(:client) { Ipayout.new }
@@ -102,7 +103,7 @@ describe Ipayout do
       end
 
       it 'should register a new user' do
-        expect(@response['m_Text']).to eq('OK')
+        expect(@response['m_Code']).to eq(0)
       end
     end
 
@@ -119,7 +120,7 @@ describe Ipayout do
       end
 
       it 'fetches account status' do
-        expect(@response['m_Text']).to eq('OK')
+        expect(@response['m_Code']).to eq(0)
         expect(@response).to include('AccStatus')
       end
     end
@@ -150,7 +151,7 @@ describe Ipayout do
         end
 
         it 'successfully disburses funds' do
-          expect(@response['m_Text']).to eq('OK')
+          expect(@response['m_Code']).to eq(0)
           expect(@response).to include('TransactionRefID')
         end
       end
@@ -163,11 +164,20 @@ describe Ipayout do
             MerchantReferenceID: '142014W' }
         end
 
-        it 'successfully disburses funds' do
+        it 'wont successfully disburses funds' do
           expect { client.ewallet_request(options_hash) }
             .to raise_error(
               Ipayout::Error::EwalletNotFound,
               'Customer with user name fakeusername is not found')
+        end
+
+        it 'will have airbrake error info' do
+          expect { client.ewallet_request(options_hash) }
+              .to raise_error do |err|
+                    req_body = err.to_airbrake[:params][:request_body]
+                    expect(req_body['arrAccounts'][0]['UserName'])
+                        .to eq(account1[:UserName])
+                  end
         end
       end
     end
