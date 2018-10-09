@@ -11,34 +11,44 @@ require 'pry'
 module Ipayout
   module Response
     class RaiseClientError < Faraday::Response::Middleware
+      def call(request_env)
+        request_body = request_env.body
+
+        @app.call(request_env).on_complete do |env|
+          env[:request_body] = request_body
+          on_complete(env)
+        end
+      end
+
       def on_complete(env)
         case env[:status].to_i
         when 200
           process_success_response(env)
         when 400
-          fail Ipayout::Error::BadRequest.new(error_message(env),
-                                              env[:response_headers])
+          error!(Ipayout::Error::BadRequest, env)
         when 401
-          fail Ipayout::Error::Unauthorized.new(error_message(env),
-                                                env[:response_headers])
+          error!(Ipayout::Error::Unauthorized, env)
         when 403
           if env[:body]['error'] == 'over_limit'
-            fail Ipayout::Error::TooManyRequests.new(error_message(env),
-                                                     env[:response_headers])
+            error!(Ipayout::Error::TooManyRequests, env)
           else
-            fail Ipayout::Error::Forbidden.new(error_message(env),
-                                               env[:response_headers])
+            error!(Ipayout::Error::Forbidden, env)
           end
         when 404
-          fail Ipayout::Error::NotFound.new(error_message(env),
-                                            env[:response_headers])
+          error!(Ipayout::Error::NotFound, env)
         when 406
-          fail Ipayout::Error::NotAcceptable.new(error_message(env),
-                                                 env[:response_headers])
+          error!(Ipayout::Error::NotAcceptable, env)
         end
       end
 
       private
+
+      def error!(error_class, env, message = nil)
+        message ||= error_message(env)
+        fail error_class.new(message,
+                             env[:response_headers],
+                             env[:request_body])
+      end
 
       def error_message(env)
         "#{env[:method].to_s.upcase} #{env[:url]}: \
@@ -66,9 +76,9 @@ module Ipayout
         return unless body_response
         case body_response[:m_Code]
         when -2
-          fail(Ipayout::Error::EwalletNotFound.new(
-                 body_response[:m_Text],
-                 env[:response_headers]))
+          error!(Ipayout::Error::EwalletNotFound,
+                 env,
+                 body_response[:m_Text])
         end
       end
     end
