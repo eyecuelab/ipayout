@@ -111,6 +111,20 @@ module Ipayout
       service
     end
 
+    #  eWallet_UpdateUserName Service
+    def build_update_user_name_service
+      service = Ipayout::Service.new('update_user_name')
+      service.add_param('fn', 'String', true)
+      service.add_param('endpoint', 'String', true)
+      service.add_param('MerchantGUID', 'String', true)
+      service.add_param('MerchantPassword', 'String', true)
+      service.add_param('CurrentUserName', 'String', true)
+      service.add_param('NewUserName', 'String', true)
+      service.add_param('Comments', 'String', false)
+      service.response_parameters = %w(m_Code m_Text)
+      service
+    end
+
     #  eWallet_Load Service
     def build_load_service
       service = Ipayout::Service.new('ewallet_load')
@@ -140,7 +154,8 @@ module Ipayout
         get_customer_details:     build_details_service,
         get_user_account_status:  build_account_service,
         request_user_auto_login:  build_login_service,
-        ewallet_load:             build_load_service
+        ewallet_load:             build_load_service,
+        update_user_name:         build_update_user_name_service,
       }
     end
   end
